@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/40827a8399c5c38d66782486d2c63456129a337c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c27284f435d8307299e034dfda3ad53581efe3e1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_24b95f54d1d4c6fdd3574a566188ebfe12892f68/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/e32c6abd1dc6764f0587535d72bca4cb45580f68/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5d83c48c4865d8543dc5080f01189402403aa088/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/40fd4e3620b81e813be236ab8e5a63690d5e3856/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f7b5e894f0582222c660bbc8f7d38424cc27fb9d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/2dbe3eaf1f396550e6aafc145f401c451fc802ea/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_15fbff7b7b40973f22144a694d1fdf617baf3e8d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Volumes/Development/android-sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_1183ba4770dd2e03b81ba303fa66830779e3e606/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/7.0.1/d5d13ea991eab0252e3710e5df3d6a9d4b21d461/butterknife-7.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/butterknife-7.0.1_852a5df33118c39d3e39e45aabcc3fd12fc54125/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="28056778ec13e2c23957ee7c7996ba3fce931e98">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_d6f8a6013faf5a624adb5d47e4ac00331bebbb07/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/b698f911f338dd7487cb2fc782a24d08b3b47dba/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9534de182c00c3b51bf17dcc4caf63968804951e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/46b70b115fd3c6e600ea443f6a7a56ebe85e9360/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1cadbb5e1d49ebcd8573ac0c19372cb4205e8a5a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/87b0018317b7acf1cb31e7718f133960a484f5bd/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f77375fcc5274825e3915b2af0eefba38880ac56/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/b2be5adbe7b1564b78c911b1c691da428179107c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_cbf92c6e16ad86ef0d723c778ff668e1c51ab205/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/cc42af6dde9fb6cb747c3abe8732e37ac54ead69/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_cfd59f86563359ff335e91d7d7c9a0800cb3dcc6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/83316afb2c9608e4f9af355e8b56459ec8a5ef93/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0c2086867658fb4fcd551d41133f3966898d1628/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/08c3f90b4d8633501d1cf50d33ad2478f0c912a7/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e51c2f662bb72419632af5192553c37e33890a99">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0e5cc9f2c9335153602470bf789dc1b215ea8473/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/a915b43b4458104170771f93e082b3b0bcbdd926/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8394a94abb55262fbe0334a81ba7c71a071a6647/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/8cd062e61dbd884fdf7b7f676d5f7ea00b955b25/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_156ea9a512050167feb92527df44be1cc9a3b0aa/classes.dex" />
+    </item>
+
+</items>
