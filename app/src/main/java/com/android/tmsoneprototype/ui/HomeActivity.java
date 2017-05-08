@@ -39,8 +39,10 @@ public class HomeActivity extends AppCompatActivity {
     ViewPager viewPager;
     @Bind(R.id.tabs)
     TabLayout tabLayout;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
+    @Bind(R.id.fabOwner)
+    FloatingActionButton fabOwner;
+    @Bind(R.id.fabProperty)
+    FloatingActionButton fabProperty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +54,17 @@ public class HomeActivity extends AppCompatActivity {
         initViewPager(viewPager);
         initTabLayout();
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabOwner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.displayToast(homeActivity, "Fab Clicked", Toast.LENGTH_SHORT);
+                Utils.displayToast(homeActivity, "Owner Clicked", Toast.LENGTH_SHORT);
+            }
+        });
+
+        fabProperty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.displayToast(homeActivity, "Property Clicked", Toast.LENGTH_SHORT);
             }
         });
     }
@@ -75,6 +84,22 @@ public class HomeActivity extends AppCompatActivity {
         adapter.addFragment(new PropertyFragment(), "Properti");
         adapter.addFragment(new MenuFragment(), "Menu");
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                animateFab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void initTabLayout() {
@@ -82,6 +107,43 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                animateFab(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void animateFab(int position) {
+        switch (position) {
+            case 0:
+                fabOwner.show();
+                fabProperty.hide();
+                break;
+            case 1:
+                fabOwner.hide();
+                fabProperty.show();
+                break;
+            case 2:
+                fabOwner.hide();
+                fabProperty.hide();
+                break;
+            default:
+                fabOwner.show();
+                fabProperty.hide();
+                break;
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
