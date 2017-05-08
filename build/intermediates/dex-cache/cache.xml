@@ -120,6 +120,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/Eannovate/.android/build-cache/11fbd78a46af00b3579adb30a1f20b6a18ac0be0/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="30a4938ea5235ccf532b3e9f04200e68547e36ad">
+        <dex dex="/Volumes/Development/Work/Mobile/TMSOnePrototype/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3291ad954043f53bec7e1dc5ccecfbc52a9708cc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/Eannovate/.android/build-cache/83316afb2c9608e4f9af355e8b56459ec8a5ef93/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"

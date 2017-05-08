@@ -1,6 +1,7 @@
 package com.android.tmsoneprototype.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,11 +9,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
 import com.android.tmsoneprototype.ui.menu.MenuFragment;
 import com.android.tmsoneprototype.ui.owner.OwnerFragment;
 import com.android.tmsoneprototype.ui.property.PropertyFragment;
+import com.android.tmsoneprototype.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +34,13 @@ public class HomeActivity extends AppCompatActivity {
     };
 
     @Bind(R.id.toolbar)
-    Toolbar _toolbar;
+    Toolbar toolbar;
     @Bind(R.id.viewpager)
-    ViewPager _viewPager;
+    ViewPager viewPager;
     @Bind(R.id.tabs)
-    TabLayout _tabLayout;
+    TabLayout tabLayout;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +48,28 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(homeActivity);
 
-        setupToolbar();
-        setupViewPager(_viewPager);
-        setupTabLayout();
+        initToolbar();
+        initViewPager(viewPager);
+        initTabLayout();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.displayToast(homeActivity, "Fab Clicked", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
-    private void setupToolbar() {
-        if(_toolbar != null){
-            setSupportActionBar(_toolbar); //set toolbar in support action bar 
+    private void initToolbar() {
+        if(toolbar != null){
+            setSupportActionBar(toolbar); //set toolbar in support action bar 
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(true); //optional
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
         }
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void initViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OwnerFragment(), "Owner");
         adapter.addFragment(new PropertyFragment(), "Properti");
@@ -64,14 +77,15 @@ public class HomeActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    private void setupTabLayout() {
-        _tabLayout.setupWithViewPager(_viewPager);
-        _tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        _tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        _tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+    private void initTabLayout() {
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
+
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
