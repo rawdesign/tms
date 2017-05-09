@@ -16,12 +16,12 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder {
     }
 
     public static PropertyViewHolder newInstance(View parent) {
-        TextView itemTextView = (TextView) parent.findViewById(R.id.itemTextView);
-        return new PropertyViewHolder(parent, itemTextView);
+        TextView tvTitle = (TextView) parent.findViewById(R.id.tvTitle);
+        return new PropertyViewHolder(parent, tvTitle);
     }
 
     public void setItemText(CharSequence text) {
-        mItemTextView.setText(text);
+        //mItemTextView.setText(text);
     }
 
 }

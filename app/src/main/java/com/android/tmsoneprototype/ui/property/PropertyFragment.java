@@ -47,7 +47,7 @@ public class PropertyFragment extends Fragment {
 
     private List<String> createItemList() {
         List<String> itemList = new ArrayList<>();
-        int itemsCount = 21;
+        int itemsCount = 6;
         for (int i = 0; i < itemsCount; i++) {
             itemList.add("Item " + i);
         }
