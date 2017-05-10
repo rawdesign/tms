@@ -16,6 +16,7 @@ import com.android.tmsoneprototype.R;
 import com.android.tmsoneprototype.ui.menu.MenuFragment;
 import com.android.tmsoneprototype.ui.owner.OwnerFragment;
 import com.android.tmsoneprototype.ui.property.PropertyFragment;
+import com.android.tmsoneprototype.ui.property.add.PropertyAddActivity;
 import com.android.tmsoneprototype.util.Utils;
 
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ public class HomeActivity extends AppCompatActivity {
     Toolbar toolbar;
     @Bind(R.id.viewpager)
     ViewPager viewPager;
-    @Bind(R.id.tabs)
+    @Bind(R.id.tab_layout)
     TabLayout tabLayout;
-    @Bind(R.id.fabOwner)
+    @Bind(R.id.fab_owner)
     FloatingActionButton fabOwner;
-    @Bind(R.id.fabProperty)
+    @Bind(R.id.fab_property)
     FloatingActionButton fabProperty;
 
     @Override
@@ -64,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         fabProperty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.displayToast(homeActivity, "Property Clicked", Toast.LENGTH_SHORT);
+                Utils.intent(homeActivity, PropertyAddActivity.class);
             }
         });
     }

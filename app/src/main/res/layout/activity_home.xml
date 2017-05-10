@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinatorLayout"
+    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -21,7 +21,7 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="fixed"
@@ -40,7 +40,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabOwner"
+        android:id="@+id/fab_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
@@ -50,7 +50,7 @@
         app:layout_behavior="com.android.tmsoneprototype.widget.ScrollingFABBehavior"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabProperty"
+        android:id="@+id/fab_property"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

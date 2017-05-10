@@ -16,7 +16,7 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder {
     }
 
     public static PropertyViewHolder newInstance(View parent) {
-        TextView tvTitle = (TextView) parent.findViewById(R.id.tvTitle);
+        TextView tvTitle = (TextView) parent.findViewById(R.id.tv_title);
         return new PropertyViewHolder(parent, tvTitle);
     }
 

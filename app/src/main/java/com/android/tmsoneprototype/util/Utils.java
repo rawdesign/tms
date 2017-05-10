@@ -1,6 +1,7 @@
 package com.android.tmsoneprototype.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.widget.Toast;
 
@@ -19,6 +20,11 @@ public class Utils {
 
     public static int getTabsHeight(Context context) {
         return (int) context.getResources().getDimension(R.dimen.tabsHeight);
+    }
+
+    public static void intent(Context context, Class<?> classs) {
+        Intent intent = new Intent(context, classs);
+        context.startActivity(intent);
     }
 
     public static void displayToast(Context context, String message, int toast) {
