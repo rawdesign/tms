@@ -9,7 +9,22 @@ import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 public class Utils {
+
+    public static String formatRupiah(double price) {
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        return kursIndonesia.format(price);
+    }
 
     public static int getToolbarHeight(Context context) {
         final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(

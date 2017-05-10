@@ -12,13 +12,21 @@ import android.widget.Toast;
 import com.android.tmsoneprototype.R;
 import com.android.tmsoneprototype.api.data.PropertyData;
 import com.android.tmsoneprototype.util.Utils;
+import com.android.tmsoneprototype.widget.ScrollLinearLayoutManager;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class PropertyFragment extends Fragment implements PropertyView {
 
     private PropertyPresenter presenter;
+    private PropertyAdapter adapter;
+    private LinearLayoutManager layoutManager;
+
+    @Bind(R.id.recyclerview)
+    RecyclerView recyclerView;
 
     public PropertyFragment() {
         // Required empty public constructor
@@ -32,49 +40,43 @@ public class PropertyFragment extends Fragment implements PropertyView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(
-                R.layout.fragment_property, container, false);
-        setupRecyclerView(recyclerView);
-
+        View rootView = inflater.inflate(R.layout.fragment_property, container, false);
+        ButterKnife.bind(this, rootView);
         presenter = new PropertyPresenterImp(this, getActivity());
         presenter.loadData();
 
-        return recyclerView;
+        return rootView;
     }
 
     @Override
     public void onPreProcess() {
-        Utils.displayToast(getActivity(), "load", Toast.LENGTH_SHORT);
+        //_progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new ScrollLinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager); // use a linear layout manager
     }
 
     @Override
     public void onSuccess(List<PropertyData> data) {
-        System.out.println("Count Data : " + data.size());
+        Utils.displayToast(getActivity(), "success", 0);
+        //_progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        adapter = new PropertyAdapter(getActivity(), data); // create an Object for Adapter
+        recyclerView.setAdapter(adapter); // set the adapter object to the Recyclerview
     }
 
     @Override
     public void onFailed() {
-        Utils.displayToast(getActivity(), "failed", Toast.LENGTH_SHORT);
+        //_progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
     }
 
     @Override
     public void onInternetFailed() {
         Utils.displayToast(getActivity(), "no internet access", Toast.LENGTH_SHORT);
-    }
-
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        PropertyAdapter recyclerAdapter = new PropertyAdapter(createItemList());
-        recyclerView.setAdapter(recyclerAdapter);
-    }
-
-    private List<String> createItemList() {
-        List<String> itemList = new ArrayList<>();
-        int itemsCount = 6;
-        for (int i = 0; i < itemsCount; i++) {
-            itemList.add("Item " + i);
-        }
-        return itemList;
     }
 
 }
