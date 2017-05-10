@@ -5,11 +5,10 @@ require_once("../packages/require.php");
 
 if(isset($_GET['action'])){
 
-	
-	require_once($global['root-url']."class/Connection.php");
+	require_once($global['root-url-model']."/Connection.php");
 	$obj_connect = new Connection();
 	
-	require_once($global['root-url']."class/Property.php");
+	require_once($global['root-url-model']."/Property.php");
 	$obj_property = new Property();
 
 	//===================================== get property ========================================
@@ -18,12 +17,15 @@ if(isset($_GET['action'])){
 		$obj_connect->up();	
 		$R_message = array("status" => "400", "message" => "No Data");
 
-		$result = $obj_property->get_data();
+		/*$result = $obj_property->get_data();
 		if(is_array($result)){
 			$R_message = array("status" => "200", "message" => "Data Exist", "num_data" => count($result), "data" => $result);
 		} else {
 			$R_message = array("status" => "400", "message" => "No Data");
-		}
+		}*/
+		$file_json = $global['root-url']."uploads/json/api/property-list.json";
+        $json = json_decode(file_get_contents($file_json), TRUE);
+        $R_message = $json;
 
 		$obj_connect->down();	
 		echo json_encode($R_message);	
