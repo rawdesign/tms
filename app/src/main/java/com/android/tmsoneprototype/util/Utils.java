@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
@@ -55,6 +56,10 @@ public class Utils {
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    public static String textInput(TextView textView) {
+        return textView.getText().toString().trim();
     }
 
     public static void intent(Context context, Class<?> classs) {

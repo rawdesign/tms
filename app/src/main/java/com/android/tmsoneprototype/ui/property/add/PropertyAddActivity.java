@@ -20,9 +20,13 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PropertyAddActivity extends AppCompatActivity {
+public class PropertyAddActivity extends AppCompatActivity implements PropertyAddView {
 
     private PropertyAddActivity propertyAddActivity = this;
+    private PropertyAddPresenter presenter;
+
+    private String owner, image, title, address, price;
+    private boolean isUpload;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -50,9 +54,10 @@ public class PropertyAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property_add);
         ButterKnife.bind(propertyAddActivity);
-        clearInput();
-        initToolbar();
+        presenter = new PropertyAddPresenterImp(this, propertyAddActivity);
 
+        initToolbar();
+        clearInput();
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,15 +66,61 @@ public class PropertyAddActivity extends AppCompatActivity {
         });
     }
 
-    private void clearInput() {
-        tvOwner.setText("Budi");
-        Picasso.with(propertyAddActivity).load(R.drawable.placeholder_upload)
-                .error(R.drawable.placeholder_upload)
-                .placeholder(R.drawable.placeholder_upload)
-                .into(imageView);
-        inputTitle.setText(null);
-        inputAddress.setText(null);
-        inputPrice.setText(null);
+    @Override
+    public void onValidate(boolean valid) {
+        if (!valid) {
+            return;
+        } else {
+            presenter.submit(owner, image, title, address, price);
+        }
+    }
+
+    @Override
+    public void onPreProcess() {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFailed() {
+
+    }
+
+    @Override
+    public void onInternetFailed() {
+
+    }
+
+    @Override
+    public void onErrorEmptyOwner() {
+        Utils.displayToast(propertyAddActivity, "Owner tidak boleh kosong", Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public void onErrorEmptyImage() {
+        Utils.displayToast(propertyAddActivity, "Image tidak boleh kosong", Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public void onErrorEmptyTitle() {
+        inputTitle.requestFocus();
+        errorTitle.setError("Title tidak boleh kosong");
+    }
+
+    @Override
+    public void onErrorEmptyAddress() {
+        inputAddress.requestFocus();
+        errorAddress.setError("Address tidak boleh kosong");
+    }
+
+    @Override
+    public void onErrorEmptyPrice() {
+        inputPrice.requestFocus();
+        errorPrice.setError("Price tidak boleh kosong");
     }
 
     private void initToolbar() {
@@ -88,6 +139,21 @@ public class PropertyAddActivity extends AppCompatActivity {
         }
     }
 
+    private void clearInput() {
+        owner = "Budi";
+        image = "upload/property/image.jpg";
+        isUpload = true;
+
+        tvOwner.setText(owner);
+        Picasso.with(propertyAddActivity).load(R.drawable.placeholder_upload)
+                .error(R.drawable.placeholder_upload)
+                .placeholder(R.drawable.placeholder_upload)
+                .into(imageView);
+        inputTitle.setText(null);
+        inputAddress.setText(null);
+        inputPrice.setText(null);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -103,7 +169,11 @@ public class PropertyAddActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_save) {
-            Utils.displayToast(propertyAddActivity, "Submit", Toast.LENGTH_SHORT);
+            owner = Utils.textInput(tvOwner);
+            title = Utils.textInput(inputTitle);
+            address = Utils.textInput(inputAddress);
+            price = Utils.textInput(inputPrice);
+            presenter.validate(owner, isUpload, title, address, price);
             return true;
         }
 
