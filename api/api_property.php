@@ -1,4 +1,4 @@
-<?php 
+<?php
 header('content-type: application/json');
 header("access-control-allow-origin: *");
 require_once("../packages/require.php");
@@ -17,15 +17,13 @@ if(isset($_GET['action'])){
 		$obj_connect->up();	
 		$R_message = array("status" => "400", "message" => "No Data");
 
-		/*$result = $obj_property->get_data();
+		$result = $obj_property->get_data();
 		if(is_array($result)){
-			$R_message = array("status" => "200", "message" => "Data Exist", "num_data" => count($result), "data" => $result);
-		} else {
-			$R_message = array("status" => "400", "message" => "No Data");
-		}*/
-		$file_json = $global['root-url']."uploads/json/api/property-list.json";
-        $json = json_decode(file_get_contents($file_json), TRUE);
-        $R_message = $json;
+			$R_message = array("status" => "200", "message" => "Data Exist", 
+				"num_data" => count($result), 
+				"remaining" => 0,
+				"data" => $result);
+		}
 
 		$obj_connect->down();	
 		echo json_encode($R_message);	
@@ -38,6 +36,7 @@ if(isset($_GET['action'])){
 
 		//field
 		$N_owner = mysql_real_escape_string($_REQUEST['owner']);
+		$N_title = mysql_real_escape_string($_REQUEST['title']);
 		$N_address = mysql_real_escape_string($_REQUEST['address']);
 		$N_price = mysql_real_escape_string($_REQUEST['price']);
 		
@@ -69,9 +68,10 @@ if(isset($_GET['action'])){
 						$image->save($file_locThmb);
 					}
 
-					$result = $obj_property->insert_data($N_owner, $N_address, $N_price, $file_loc1, $file_locThmb1);
-					if($result == 1){
-						$R_message = array("status" => "200", "message" => "Insert Data Success");
+					$result = $obj_property->insert_data($N_owner, $N_title, $N_address, $N_price, $file_loc1, $file_locThmb1);
+					if($result >= 1){
+						$datas = $obj_property->get_data_detail($result);
+						$R_message = array("status" => "200", "message" => "Insert Data Success", "data" => $datas);
 					}
 				}else{
 					$R_message = array("status" => "413", "message" => "ERROR: file size max 10 MB!");
@@ -87,7 +87,6 @@ if(isset($_GET['action'])){
 		echo json_encode($R_message);	
 	}//end insert property
 
-	
 } else{
 	$R_message = array("status" => "404", "message" => "Not Found");
 	echo json_encode($R_message);

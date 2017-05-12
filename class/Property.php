@@ -31,12 +31,12 @@ class Property{
 		}
 		return $result;
 	}	
-	public function insert_data($owner, $address, $price, $img, $img_thmb){
+	public function insert_data($owner, $title, $address, $price, $img, $img_thmb){
 		$result = 0;
-		$text = "INSERT INTO $this->table (property_owner, property_address, property_price, property_img, property_img_thmb) VALUES('$owner', '$address', '$price', '$img', '$img_thmb')";
+		$text = "INSERT INTO $this->table (property_owner, property_title, property_address, property_price, property_img, property_img_thmb, property_create_date) VALUES('$owner', '$title', '$address', '$price', '$img', '$img_thmb', NOW())";
 		$query = mysql_query($text);
 		if($query){
-			$result = 1;
+			$result = mysql_insert_id();
 		}
 		return $result;
 	}
