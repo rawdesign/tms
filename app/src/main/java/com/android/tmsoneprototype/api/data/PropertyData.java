@@ -27,6 +27,18 @@ public class PropertyData {
     @Expose
     private String propertyImgThmb;
 
+    public PropertyData(String propertyId, String propertyOwner, String propertyTitle,
+                        String propertyAddress, String propertyPrice, String propertyImg,
+                        String propertyImgThmb) {
+        this.propertyId = propertyId;
+        this.propertyOwner = propertyOwner;
+        this.propertyTitle = propertyTitle;
+        this.propertyAddress = propertyAddress;
+        this.propertyPrice = propertyPrice;
+        this.propertyImg = propertyImg;
+        this.propertyImgThmb = propertyImgThmb;
+    }
+
     public String getPropertyId() {
         return propertyId;
     }

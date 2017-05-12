@@ -1,6 +1,7 @@
 package com.android.tmsoneprototype.ui.property.add;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import com.android.tmsoneprototype.R;
 import com.android.tmsoneprototype.api.data.PropertyAddData;
 import com.android.tmsoneprototype.permission.PermissionsActivity;
 import com.android.tmsoneprototype.permission.PermissionsChecker;
+import com.android.tmsoneprototype.ui.property.PropertyFragment;
 import com.android.tmsoneprototype.util.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -35,6 +37,7 @@ public class PropertyAddActivity extends AppCompatActivity implements PropertyAd
     private PropertyAddActivity propertyAddActivity = this;
     private PropertyAddPresenter presenter;
     private PermissionsChecker checker;
+    private ProgressDialog progress;
 
     private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
     private String owner, image, title, address, price;
@@ -68,6 +71,7 @@ public class PropertyAddActivity extends AppCompatActivity implements PropertyAd
         ButterKnife.bind(propertyAddActivity);
         presenter = new PropertyAddPresenterImp(this, propertyAddActivity);
         checker = new PermissionsChecker(propertyAddActivity);
+        progress = new ProgressDialog(propertyAddActivity);
 
         initToolbar();
         clearInput();
@@ -101,22 +105,30 @@ public class PropertyAddActivity extends AppCompatActivity implements PropertyAd
 
     @Override
     public void onPreProcess() {
-        Utils.displayToast(propertyAddActivity, "process", Toast.LENGTH_SHORT);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.setMessage("process");
+        progress.show();
     }
 
     @Override
     public void onSuccess(List<PropertyAddData> data) {
+        progress.dismiss();
+        presenter.close();
         Utils.displayToast(propertyAddActivity, "success", Toast.LENGTH_SHORT);
-        System.out.println("Owner : " + data.get(0).getPropertyOwner());
+        PropertyFragment propertyFragment = new PropertyFragment();
+        propertyFragment.addItem(data);
     }
 
     @Override
     public void onFailed() {
+        progress.dismiss();
         Utils.displayToast(propertyAddActivity, "failed", Toast.LENGTH_SHORT);
     }
 
     @Override
     public void onInternetFailed() {
+        progress.dismiss();
         Utils.displayToast(propertyAddActivity, "no internet access", Toast.LENGTH_SHORT);
     }
 
@@ -150,11 +162,13 @@ public class PropertyAddActivity extends AppCompatActivity implements PropertyAd
 
     @Override
     public void onErrorSizeImage() {
+        progress.dismiss();
         Utils.displayToast(propertyAddActivity, "Ukuran image maksimal 10 MB", Toast.LENGTH_SHORT);
     }
 
     @Override
     public void onErrorExtensionImage() {
+        progress.dismiss();
         Utils.displayToast(propertyAddActivity, "Format image tidak valid", Toast.LENGTH_SHORT);
     }
 
