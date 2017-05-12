@@ -12,5 +12,5 @@ public interface PropertyAddPresenter {
     /**
      * Submit
      */
-    void submit(String owner, String image, String title, String address, String price);
+    void submit(String owner, String title, String address, String price, String image);
 }

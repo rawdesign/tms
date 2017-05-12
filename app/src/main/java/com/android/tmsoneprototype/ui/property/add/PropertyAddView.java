@@ -1,20 +1,24 @@
 package com.android.tmsoneprototype.ui.property.add;
 
+import com.android.tmsoneprototype.api.data.PropertyAddData;
+
+import java.util.List;
+
 public interface PropertyAddView {
     /**
      * Validate.
      */
     void onValidate(boolean valid);
     /**
-     * Post pre process.
+     * Pre process.
      */
     void onPreProcess();
     /**
-     * Post success.
+     * Success.
      */
-    void onSuccess();
+    void onSuccess(List<PropertyAddData> data);
     /**
-     * Post failed.
+     * Failed.
      */
     void onFailed();
     /**
@@ -41,4 +45,12 @@ public interface PropertyAddView {
      * Error price empty.
      */
     void onErrorEmptyPrice();
+    /**
+     * Error image size.
+     */
+    void onErrorSizeImage();
+    /**
+     * Error image extension.
+     */
+    void onErrorExtensionImage();
 }

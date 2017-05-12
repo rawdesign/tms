@@ -1,9 +1,22 @@
 package com.android.tmsoneprototype.ui.property.add;
 
 import android.app.Activity;
-import android.widget.Toast;
 
+import com.android.tmsoneprototype.api.PropertyAPI;
+import com.android.tmsoneprototype.api.data.PropertyAddData;
+import com.android.tmsoneprototype.api.response.PropertyAddResponse;
+import com.android.tmsoneprototype.service.Retrofit;
 import com.android.tmsoneprototype.util.Utils;
+
+import java.io.File;
+import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PropertyAddPresenterImp implements PropertyAddPresenter {
 
@@ -45,13 +58,58 @@ public class PropertyAddPresenterImp implements PropertyAddPresenter {
     }
 
     @Override
-    public void submit(String owner, String image, String title, String address, String price) {
-        Utils.displayToast(mActivity, "Submit", Toast.LENGTH_SHORT);
-        System.out.println("Owner : " + owner);
-        System.out.println("Image : " + image);
-        System.out.println("Title : " + title);
-        System.out.println("Address : " + address);
-        System.out.println("Price : " + price);
+    public void submit(String owner, String title, String address, String price, String image) {
+        mView.onPreProcess();
+        if(Utils.haveNetworkConnection(mActivity)){
+            //Create Upload Server Client
+            PropertyAPI service = Retrofit.setup().create(PropertyAPI.class);
+
+            //File creating from selected URL
+            File file = new File(image);
+
+            //Create RequestBody instance from file
+            RequestBody requestOwner = RequestBody.create(MediaType.parse("text/plain"), owner);
+            RequestBody requestTitle = RequestBody.create(MediaType.parse("text/plain"), title);
+            RequestBody requestAddress = RequestBody.create(MediaType.parse("text/plain"), address);
+            RequestBody requestPrice = RequestBody.create(MediaType.parse("text/plain"), price);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+            //MultipartBody.Part is used to send also the actual file name
+            MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
+            Call<PropertyAddResponse> call = service.insert(requestOwner, requestTitle, requestAddress, requestPrice, body);
+            call.enqueue(new Callback<PropertyAddResponse>() {
+                @Override
+                public void onResponse(Call<PropertyAddResponse> call, Response<PropertyAddResponse> response) {
+                    String status = response.body().getStatus();
+                    switch (status) {
+                        case "200":
+                            List<PropertyAddData> data = response.body().getData();
+                            mView.onSuccess(data);
+                            break;
+                        case "400":
+                            mView.onFailed();
+                            break;
+                        case "413":
+                            mView.onErrorSizeImage();
+                            break;
+                        case "415":
+                            mView.onErrorExtensionImage();
+                            break;
+                        default:
+                            mView.onFailed();
+                            break;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PropertyAddResponse> call, Throwable t) {
+                    // Log error here since request failed
+                }
+            });
+        }else{
+            mView.onInternetFailed();
+        }
     }
 
 }
