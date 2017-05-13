@@ -14,12 +14,6 @@ public class PropertyResponse {
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("num_data")
-    @Expose
-    private Integer numData;
-    @SerializedName("remaining")
-    @Expose
-    private Integer remaining;
     @SerializedName("data")
     @Expose
     private List<PropertyData> data = null;
@@ -38,22 +32,6 @@ public class PropertyResponse {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public Integer getNumData() {
-        return numData;
-    }
-
-    public void setNumData(Integer numData) {
-        this.numData = numData;
-    }
-
-    public Integer getRemaining() {
-        return remaining;
-    }
-
-    public void setRemaining(Integer remaining) {
-        this.remaining = remaining;
     }
 
     public List<PropertyData> getData() {

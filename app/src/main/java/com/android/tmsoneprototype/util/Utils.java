@@ -15,6 +15,19 @@ import java.text.DecimalFormatSymbols;
 
 public class Utils {
 
+    public static String getImageURL(String image) {
+        String path = "";
+        if(image.startsWith("http") || image.startsWith("https")){
+            path = image;
+        }else if(image.startsWith("uploads/")){
+            path = Const.BASE_URL + image;
+        }else{
+            path = "file://" + image;
+        }
+
+        return path;
+    }
+
     public static String formatRupiah(double price) {
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();

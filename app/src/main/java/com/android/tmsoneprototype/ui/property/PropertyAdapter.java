@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
 import com.android.tmsoneprototype.api.data.PropertyData;
-import com.android.tmsoneprototype.util.Const;
 import com.android.tmsoneprototype.util.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -63,18 +62,38 @@ public class PropertyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ivStatus = (ImageView) itemView.findViewById(R.id.iv_status);
         }
 
-        void bindData(final PropertyData propertyData){
-            Picasso.with(activity).load(Const.BASE_URL + propertyData.getPropertyImg())
+        void bindData(PropertyData propertyData){
+            String image = propertyData.getPropertyImg();
+            String price = propertyData.getPropertyPrice();
+            final String title = propertyData.getPropertyTitle();
+            String address = propertyData.getPropertyAddress();
+            String status = propertyData.getPropertyStatus();
+
+            Picasso.with(activity).load(Utils.getImageURL(image))
                     .error(R.drawable.placeholder_upload)
                     .placeholder(R.drawable.placeholder_upload)
                     .into(ivProperty);
-            tvPrice.setText(Utils.formatRupiah(Double.valueOf(propertyData.getPropertyPrice())));
-            tvTitle.setText(propertyData.getPropertyTitle());
-            tvDescription.setText(propertyData.getPropertyAddress());
+            tvPrice.setText(Utils.formatRupiah(Double.valueOf(price)));
+            tvTitle.setText(title);
+            tvDescription.setText(address);
+            switch (status) {
+                case "pending":
+                    Picasso.with(activity).load(R.drawable.hourglass_24).into(ivStatus);
+                    break;
+                case "success":
+                    Picasso.with(activity).load(R.drawable.checkmark_24).into(ivStatus);
+                    break;
+                case "failed":
+                    Picasso.with(activity).load(R.drawable.delete_24).into(ivStatus);
+                    break;
+                default:
+                    Picasso.with(activity).load(R.drawable.hourglass_24).into(ivStatus);
+            }
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utils.displayToast(activity, propertyData.getPropertyTitle(), Toast.LENGTH_SHORT);
+                    Utils.displayToast(activity, title, Toast.LENGTH_SHORT);
                 }
             });
         }

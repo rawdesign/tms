@@ -26,10 +26,19 @@ public class PropertyData {
     @SerializedName("property_img_thmb")
     @Expose
     private String propertyImgThmb;
+    @SerializedName("property_status")
+    @Expose
+    private String propertyStatus;
+    @SerializedName("property_create_date")
+    @Expose
+    private String propertyCreateDate;
+    @SerializedName("property_modify_date")
+    @Expose
+    private String propertyModifyDate;
 
     public PropertyData(String propertyId, String propertyOwner, String propertyTitle,
                         String propertyAddress, String propertyPrice, String propertyImg,
-                        String propertyImgThmb) {
+                        String propertyImgThmb, String propertyStatus) {
         this.propertyId = propertyId;
         this.propertyOwner = propertyOwner;
         this.propertyTitle = propertyTitle;
@@ -37,6 +46,7 @@ public class PropertyData {
         this.propertyPrice = propertyPrice;
         this.propertyImg = propertyImg;
         this.propertyImgThmb = propertyImgThmb;
+        this.propertyStatus = propertyStatus;
     }
 
     public String getPropertyId() {
@@ -93,6 +103,30 @@ public class PropertyData {
 
     public void setPropertyImgThmb(String propertyImgThmb) {
         this.propertyImgThmb = propertyImgThmb;
+    }
+
+    public String getPropertyStatus() {
+        return propertyStatus;
+    }
+
+    public void setPropertyStatus(String propertyStatus) {
+        this.propertyStatus = propertyStatus;
+    }
+
+    public String getPropertyCreateDate() {
+        return propertyCreateDate;
+    }
+
+    public void setPropertyCreateDate(String propertyCreateDate) {
+        this.propertyCreateDate = propertyCreateDate;
+    }
+
+    public String getPropertyModifyDate() {
+        return propertyModifyDate;
+    }
+
+    public void setPropertyModifyDate(String propertyModifyDate) {
+        this.propertyModifyDate = propertyModifyDate;
     }
 
 }
