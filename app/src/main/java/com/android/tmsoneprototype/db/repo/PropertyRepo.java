@@ -1,11 +1,16 @@
 package com.android.tmsoneprototype.db.repo;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.android.tmsoneprototype.db.DBManager;
 import com.android.tmsoneprototype.db.model.PropertyAdd;
+import com.android.tmsoneprototype.db.model.PropertyList;
 import com.android.tmsoneprototype.util.Const;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PropertyRepo {
 
@@ -19,6 +24,39 @@ public class PropertyRepo {
                 + Const.FIELD_PROPERTY_IMG + " TEXT,"
                 + Const.FIELD_PROPERTY_IMG_THMB + " TEXT,"
                 + Const.FIELD_PROPERTY_STATUS + " TEXT)";
+    }
+
+    /**
+     * Get all property into SQLite DB
+     */
+    public List<PropertyList> getAll() {
+        PropertyList property = new PropertyList();
+        List<PropertyList> propertyLists = new ArrayList<PropertyList>();
+
+        SQLiteDatabase db = DBManager.getInstance().openDatabase();
+        String query = "SELECT * FROM " + Const.TABLE_PROPERTY;
+        Cursor cursor = db.rawQuery(query, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                property = new PropertyList();
+                property.setId(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_ID)));
+                property.setOwner(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_OWNER)));
+                property.setTitle(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_TITLE)));
+                property.setAddress(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_ADDRESS)));
+                property.setPrice(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_PRICE)));
+                property.setImg(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_IMG)));
+                property.setImgThmb(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_IMG_THMB)));
+                property.setStatus(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_STATUS)));
+
+                propertyLists.add(property);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        DBManager.getInstance().closeDatabase();
+
+        return propertyLists;
     }
 
     /**
@@ -42,6 +80,15 @@ public class PropertyRepo {
         DBManager.getInstance().closeDatabase();
 
         return id;
+    }
+
+    /**
+     * Delete all record
+     */
+    public void deleteAll() {
+        SQLiteDatabase db = DBManager.getInstance().openDatabase();
+        db.delete(Const.TABLE_PROPERTY, null, null);
+        DBManager.getInstance().closeDatabase();
     }
 
 }

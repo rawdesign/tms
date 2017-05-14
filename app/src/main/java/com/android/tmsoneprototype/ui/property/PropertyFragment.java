@@ -2,6 +2,7 @@ package com.android.tmsoneprototype.ui.property;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
-import com.android.tmsoneprototype.api.data.PropertyData;
-import com.android.tmsoneprototype.ui.property.add.PropertyAddModel;
+import com.android.tmsoneprototype.db.model.PropertyAdd;
+import com.android.tmsoneprototype.db.model.PropertyList;
 import com.android.tmsoneprototype.util.Utils;
 import com.android.tmsoneprototype.widget.ScrollLinearLayoutManager;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 public class PropertyFragment extends Fragment implements PropertyView {
 
     private PropertyPresenter presenter;
-    public static List<PropertyData> mDatas;
+    public static List<PropertyList> mDatas;
     public static PropertyAdapter mAdapter;
     public static RecyclerView mRecyclerView;
     private LinearLayoutManager layoutManager;
@@ -50,18 +51,13 @@ public class PropertyFragment extends Fragment implements PropertyView {
         mRecyclerView = recyclerView;
         presenter = new PropertyPresenterImp(this, getActivity());
         progress = new ProgressDialog(getActivity());
-        presenter.loadData();
+        getAll();
 
         return rootView;
     }
 
     @Override
     public void onPreProcess() {
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setCancelable(true);
-        progress.setMessage("loading");
-        progress.show();
-
         mRecyclerView.setVisibility(View.GONE);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -71,7 +67,7 @@ public class PropertyFragment extends Fragment implements PropertyView {
     }
 
     @Override
-    public void onSuccess(List<PropertyData> data) {
+    public void onSuccess(List<PropertyList> data) {
         progress.dismiss();
         mDatas = data;
         mAdapter = new PropertyAdapter(getActivity(), mDatas); // create an Object for Adapter;
@@ -86,19 +82,34 @@ public class PropertyFragment extends Fragment implements PropertyView {
         mRecyclerView.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onInternetFailed() {
-        progress.dismiss();
-        Utils.displayToast(getActivity(), "no internet access", Toast.LENGTH_SHORT);
+    private void getAll(){
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCancelable(true);
+        progress.setMessage("loading");
+        progress.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                presenter.loadData();
+            }
+        }, 2000);
     }
 
-    public void addItem(PropertyAddModel propertyAddModel) {
+    public void addItem(PropertyAdd propertyAdd) {
         int position = 0;
-        mDatas.add(position, new PropertyData(
-                propertyAddModel.getId(), propertyAddModel.getOwner(), propertyAddModel.getTitle(),
-                propertyAddModel.getAddress(), propertyAddModel.getPrice(), propertyAddModel.getImg(),
-                propertyAddModel.getImgThmb(), propertyAddModel.getStatus()
-        ));
+        PropertyList list = new PropertyList();
+        list.setId(propertyAdd.getId());
+        list.setOwner(propertyAdd.getOwner());
+        list.setTitle(propertyAdd.getTitle());
+        list.setAddress(propertyAdd.getAddress());
+        list.setPrice(propertyAdd.getPrice());
+        list.setImg(propertyAdd.getImg());
+        list.setImgThmb(propertyAdd.getImgThmb());
+        list.setStatus(propertyAdd.getStatus());
+
+        mDatas.add(position, list);
         mAdapter.notifyItemInserted(position);
         mRecyclerView.scrollToPosition(position);
     }

@@ -1,6 +1,6 @@
 package com.android.tmsoneprototype.ui.property;
 
-import com.android.tmsoneprototype.api.data.PropertyData;
+import com.android.tmsoneprototype.db.model.PropertyList;
 
 import java.util.List;
 
@@ -12,13 +12,9 @@ public interface PropertyView {
     /**
      * Success.
      */
-    void onSuccess(List<PropertyData> data);
+    void onSuccess(List<PropertyList> data);
     /**
      * Failed.
      */
     void onFailed();
-    /**
-     * Internet Failed.
-     */
-    void onInternetFailed();
 }

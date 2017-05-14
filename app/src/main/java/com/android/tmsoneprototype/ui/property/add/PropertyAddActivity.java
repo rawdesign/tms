@@ -118,16 +118,7 @@ public class PropertyAddActivity extends AppCompatActivity implements PropertyAd
         progress.dismiss();
         presenter.close();
         PropertyFragment propertyFragment = new PropertyFragment();
-        propertyFragment.addItem(new PropertyAddModel(
-                obj.getId(),
-                obj.getOwner(),
-                obj.getTitle(),
-                obj.getAddress(),
-                obj.getPrice(),
-                obj.getImg(),
-                obj.getImgThmb(),
-                "pending")
-        );
+        propertyFragment.addItem(obj);
     }
 
     @Override

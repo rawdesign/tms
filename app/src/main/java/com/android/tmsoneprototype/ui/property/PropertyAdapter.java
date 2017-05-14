@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
-import com.android.tmsoneprototype.api.data.PropertyData;
+import com.android.tmsoneprototype.db.model.PropertyList;
 import com.android.tmsoneprototype.util.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -20,9 +20,9 @@ import java.util.List;
 public class PropertyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static Activity activity;
-    static List<PropertyData> propertys;
+    static List<PropertyList> propertys;
 
-    public PropertyAdapter(Activity activity, List<PropertyData> propertys) {
+    public PropertyAdapter(Activity activity, List<PropertyList> propertys) {
         this.activity = activity;
         this.propertys = propertys;
     }
@@ -62,12 +62,12 @@ public class PropertyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ivStatus = (ImageView) itemView.findViewById(R.id.iv_status);
         }
 
-        void bindData(PropertyData propertyData){
-            String image = propertyData.getPropertyImg();
-            String price = propertyData.getPropertyPrice();
-            final String title = propertyData.getPropertyTitle();
-            String address = propertyData.getPropertyAddress();
-            String status = propertyData.getPropertyStatus();
+        void bindData(PropertyList list){
+            String image = list.getImg();
+            String price = list.getPrice();
+            final String title = list.getTitle();
+            String address = list.getAddress();
+            String status = list.getStatus();
 
             Picasso.with(activity).load(Utils.getImageURL(image))
                     .error(R.drawable.placeholder_upload)
