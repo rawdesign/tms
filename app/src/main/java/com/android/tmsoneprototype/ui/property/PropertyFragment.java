@@ -15,6 +15,7 @@ import com.android.tmsoneprototype.R;
 import com.android.tmsoneprototype.api.data.PropertyAddData;
 import com.android.tmsoneprototype.db.model.PropertyAdd;
 import com.android.tmsoneprototype.db.model.PropertyList;
+import com.android.tmsoneprototype.db.repo.PropertyRepo;
 import com.android.tmsoneprototype.util.Utils;
 import com.android.tmsoneprototype.widget.ScrollLinearLayoutManager;
 
@@ -77,7 +78,15 @@ public class PropertyFragment extends Fragment implements PropertyView {
 
     @Override
     public void onAddSuccess(List<PropertyAddData> data) {
-        syncStatus(data.get(0).getPropertyTitle());
+        int result;
+        PropertyRepo repo = new PropertyRepo();
+        result = repo.updateStatus(data.get(0).getPropertyTitle(), "success");
+
+        if(result >= 1){
+            syncStatus(data.get(0).getPropertyTitle());
+        }else{
+            Utils.displayToast(getActivity(), "update failed", Toast.LENGTH_SHORT);
+        }
     }
 
     @Override

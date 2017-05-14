@@ -102,7 +102,7 @@ public class PropertyRepo {
      * Insert property into SQLite DB
      */
     public int insert(PropertyAdd propertyAdd) {
-        int id;
+        int result;
         SQLiteDatabase db = DBManager.getInstance().openDatabase();
         ContentValues values = new ContentValues();
         values.put(Const.FIELD_PROPERTY_ID, propertyAdd.getId());
@@ -116,10 +116,29 @@ public class PropertyRepo {
         values.put(Const.FIELD_PROPERTY_CREATE_DATE, propertyAdd.getCreateDate());
 
         // Inserting row
-        id = (int) db.insert(Const.TABLE_PROPERTY, null, values);
+        result = (int) db.insert(Const.TABLE_PROPERTY, null, values);
         DBManager.getInstance().closeDatabase();
 
-        return id;
+        return result;
+    }
+
+    /**
+     * Update status property into SQLite DB
+     */
+    public int updateStatus(String title, String status) {
+        int result;
+        String where = Const.FIELD_PROPERTY_TITLE + "=?";
+        String[] whereArgs = new String[] {title};
+
+        SQLiteDatabase db = DBManager.getInstance().openDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Const.FIELD_PROPERTY_STATUS, status);
+
+        // Updating row
+        result = (int) db.update(Const.TABLE_PROPERTY, values, where, whereArgs);
+        DBManager.getInstance().closeDatabase();
+
+        return result;
     }
 
     /**
