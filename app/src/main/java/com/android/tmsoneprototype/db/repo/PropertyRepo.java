@@ -63,6 +63,42 @@ public class PropertyRepo {
     }
 
     /**
+     * Get all property with status pending into SQLite DB
+     */
+    public List<PropertyList> getPending() {
+        PropertyList property = new PropertyList();
+        List<PropertyList> propertyLists = new ArrayList<PropertyList>();
+
+        SQLiteDatabase db = DBManager.getInstance().openDatabase();
+        String query = "SELECT * FROM " + Const.TABLE_PROPERTY
+                + " WHERE " + Const.FIELD_PROPERTY_STATUS + " = 'pending'"
+                + " ORDER BY " + Const.FIELD_PROPERTY_CREATE_DATE + " DESC";
+        Cursor cursor = db.rawQuery(query, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                property = new PropertyList();
+                property.setId(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_ID)));
+                property.setOwner(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_OWNER)));
+                property.setTitle(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_TITLE)));
+                property.setAddress(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_ADDRESS)));
+                property.setPrice(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_PRICE)));
+                property.setImg(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_IMG)));
+                property.setImgThmb(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_IMG_THMB)));
+                property.setStatus(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_STATUS)));
+                property.setCreateDate(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_CREATE_DATE)));
+
+                propertyLists.add(property);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        DBManager.getInstance().closeDatabase();
+
+        return propertyLists;
+    }
+
+    /**
      * Insert property into SQLite DB
      */
     public int insert(PropertyAdd propertyAdd) {

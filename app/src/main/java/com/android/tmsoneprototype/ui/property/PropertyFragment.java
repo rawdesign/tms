@@ -97,6 +97,13 @@ public class PropertyFragment extends Fragment implements PropertyView {
         }, 2000);
     }
 
+    private int getItemPosition(String title) {
+        for (int position = 0; position < mDatas.size(); position++)
+            if (mDatas.get(position).getTitle().equals(title))
+                return position;
+        return 0;
+    }
+
     public void addItem(PropertyAdd propertyAdd) {
         int position = 0;
         PropertyList list = new PropertyList();
@@ -113,6 +120,12 @@ public class PropertyFragment extends Fragment implements PropertyView {
         mDatas.add(position, list);
         mAdapter.notifyItemInserted(position);
         mRecyclerView.scrollToPosition(position);
+    }
+
+    public void syncStatus(String title) {
+        PropertyList propertyList = mDatas.get(getItemPosition(title));
+        propertyList.setStatus("success");
+        mAdapter.notifyDataSetChanged();
     }
 
 }
