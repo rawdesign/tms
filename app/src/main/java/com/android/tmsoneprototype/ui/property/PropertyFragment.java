@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
+import com.android.tmsoneprototype.api.data.PropertyAddData;
 import com.android.tmsoneprototype.db.model.PropertyAdd;
 import com.android.tmsoneprototype.db.model.PropertyList;
 import com.android.tmsoneprototype.util.Utils;
 import com.android.tmsoneprototype.widget.ScrollLinearLayoutManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class PropertyFragment extends Fragment implements PropertyView {
 
-    private PropertyPresenter presenter;
+    public static PropertyPresenter mPresenter;
     public static List<PropertyList> mDatas;
     public static PropertyAdapter mAdapter;
     public static RecyclerView mRecyclerView;
@@ -49,7 +51,7 @@ public class PropertyFragment extends Fragment implements PropertyView {
         View rootView = inflater.inflate(R.layout.fragment_property, container, false);
         ButterKnife.bind(this, rootView);
         mRecyclerView = recyclerView;
-        presenter = new PropertyPresenterImp(this, getActivity());
+        mPresenter = new PropertyPresenterImp(this, getActivity());
         progress = new ProgressDialog(getActivity());
         getAll();
 
@@ -58,7 +60,6 @@ public class PropertyFragment extends Fragment implements PropertyView {
 
     @Override
     public void onPreProcess() {
-        mRecyclerView.setVisibility(View.GONE);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
@@ -71,18 +72,34 @@ public class PropertyFragment extends Fragment implements PropertyView {
         progress.dismiss();
         mDatas = data;
         mAdapter = new PropertyAdapter(getActivity(), mDatas); // create an Object for Adapter;
-        mRecyclerView.setVisibility(View.VISIBLE);
         mRecyclerView.setAdapter(mAdapter); // set the adapter object to the Recyclerview
+    }
+
+    @Override
+    public void onAddSuccess(List<PropertyAddData> data) {
+        syncStatus(data.get(0).getPropertyTitle());
     }
 
     @Override
     public void onFailed() {
         progress.dismiss();
+        mDatas = new ArrayList<PropertyList>();
+        mAdapter = new PropertyAdapter(getActivity(), mDatas); // create an Object for Adapter;
+        mRecyclerView.setAdapter(mAdapter); // set the adapter object to the Recyclerview
         Utils.displayToast(getActivity(), "no data", Toast.LENGTH_SHORT);
-        mRecyclerView.setVisibility(View.GONE);
     }
 
-    private void getAll(){
+    @Override
+    public void onErrorSizeImage() {
+        Utils.displayToast(getActivity(), "Image Size melebihi 10 MB", Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public void onErrorExtensionImage() {
+        Utils.displayToast(getActivity(), "Format image tidak valid", Toast.LENGTH_SHORT);
+    }
+
+    private void getAll() {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(true);
         progress.setMessage("loading");
@@ -92,7 +109,7 @@ public class PropertyFragment extends Fragment implements PropertyView {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                presenter.loadData();
+                mPresenter.loadData();
             }
         }, 2000);
     }
@@ -120,6 +137,7 @@ public class PropertyFragment extends Fragment implements PropertyView {
         mDatas.add(position, list);
         mAdapter.notifyItemInserted(position);
         mRecyclerView.scrollToPosition(position);
+        mPresenter.insert(propertyAdd);
     }
 
     public void syncStatus(String title) {
