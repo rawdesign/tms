@@ -2,7 +2,9 @@ package com.android.tmsoneprototype.ui.property.add;
 
 import android.app.Activity;
 
-import com.android.tmsoneprototype.ui.property.PropertyFragment;
+import com.android.tmsoneprototype.db.model.PropertyAdd;
+import com.android.tmsoneprototype.db.repo.PropertyRepo;
+import com.android.tmsoneprototype.util.Utils;
 
 public class PropertyAddPresenterImp implements PropertyAddPresenter {
 
@@ -45,9 +47,26 @@ public class PropertyAddPresenterImp implements PropertyAddPresenter {
 
     @Override
     public void submit(String owner, String title, String address, String price, String image) {
-        close();
-        PropertyFragment propertyFragment = new PropertyFragment();
-        propertyFragment.addItem(new PropertyAddModel("0", owner, title, address, price, image, image, "pending"));
+        int result;
+        PropertyRepo repo = new PropertyRepo();
+
+        //Insert data
+        PropertyAdd obj = new PropertyAdd();
+        obj.setId(Utils.getImageUUID());
+        obj.setOwner(owner);
+        obj.setTitle(title);
+        obj.setAddress(address);
+        obj.setPrice(price);
+        obj.setImg(image);
+        obj.setImgThmb(image);
+        obj.setStatus("pending");
+        result = repo.insert(obj);
+
+        if(result >= 1){
+            mView.onSuccess(obj);
+        }else{
+            mView.onFailed();
+        }
     }
 
 }

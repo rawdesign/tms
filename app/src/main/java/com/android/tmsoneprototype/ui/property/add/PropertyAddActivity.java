@@ -1,10 +1,12 @@
 package com.android.tmsoneprototype.ui.property.add;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
+import com.android.tmsoneprototype.db.model.PropertyAdd;
 import com.android.tmsoneprototype.permission.PermissionsActivity;
 import com.android.tmsoneprototype.permission.PermissionsChecker;
+import com.android.tmsoneprototype.ui.property.PropertyFragment;
 import com.android.tmsoneprototype.util.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -32,6 +36,7 @@ public class PropertyAddActivity extends AppCompatActivity implements PropertyAd
     private PropertyAddActivity propertyAddActivity = this;
     private PropertyAddPresenter presenter;
     private PermissionsChecker checker;
+    private ProgressDialog progress;
 
     private static final String[] PERMISSIONS_READ_STORAGE = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
     private String owner, image, title, address, price;
@@ -65,6 +70,7 @@ public class PropertyAddActivity extends AppCompatActivity implements PropertyAd
         ButterKnife.bind(propertyAddActivity);
         presenter = new PropertyAddPresenterImp(this, propertyAddActivity);
         checker = new PermissionsChecker(propertyAddActivity);
+        progress = new ProgressDialog(propertyAddActivity);
 
         initToolbar();
         clearInput();
@@ -92,8 +98,42 @@ public class PropertyAddActivity extends AppCompatActivity implements PropertyAd
         if (!valid) {
             return;
         } else {
-            presenter.submit(owner, title, address, price, image);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setCancelable(true);
+            progress.setMessage("loading");
+            progress.show();
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    presenter.submit(owner, title, address, price, image);
+                }
+            }, 2000);
         }
+    }
+
+    @Override
+    public void onSuccess(PropertyAdd obj) {
+        progress.dismiss();
+        presenter.close();
+        PropertyFragment propertyFragment = new PropertyFragment();
+        propertyFragment.addItem(new PropertyAddModel(
+                obj.getId(),
+                obj.getOwner(),
+                obj.getTitle(),
+                obj.getAddress(),
+                obj.getPrice(),
+                obj.getImg(),
+                obj.getImgThmb(),
+                "pending")
+        );
+    }
+
+    @Override
+    public void onFailed() {
+        progress.dismiss();
+        Utils.displayToast(propertyAddActivity, "failed", Toast.LENGTH_SHORT);
     }
 
     @Override

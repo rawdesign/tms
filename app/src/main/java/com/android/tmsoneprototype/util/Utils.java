@@ -12,8 +12,13 @@ import com.android.tmsoneprototype.R;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.UUID;
 
 public class Utils {
+
+    public static String getImageUUID() {
+        return UUID.randomUUID().toString();
+    }
 
     public static String getImageURL(String image) {
         String path = "";
