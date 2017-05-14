@@ -10,6 +10,7 @@ public class PropertyAdd {
     private String img;
     private String imgThmb;
     private String status;
+    private String createDate;
 
     public String getId() {
         return id;
@@ -73,6 +74,14 @@ public class PropertyAdd {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
 }

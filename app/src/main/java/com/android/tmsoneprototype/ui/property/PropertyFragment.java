@@ -108,6 +108,7 @@ public class PropertyFragment extends Fragment implements PropertyView {
         list.setImg(propertyAdd.getImg());
         list.setImgThmb(propertyAdd.getImgThmb());
         list.setStatus(propertyAdd.getStatus());
+        list.setCreateDate(propertyAdd.getCreateDate());
 
         mDatas.add(position, list);
         mAdapter.notifyItemInserted(position);

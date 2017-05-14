@@ -23,7 +23,8 @@ public class PropertyRepo {
                 + Const.FIELD_PROPERTY_PRICE + " TEXT,"
                 + Const.FIELD_PROPERTY_IMG + " TEXT,"
                 + Const.FIELD_PROPERTY_IMG_THMB + " TEXT,"
-                + Const.FIELD_PROPERTY_STATUS + " TEXT)";
+                + Const.FIELD_PROPERTY_STATUS + " TEXT,"
+                + Const.FIELD_PROPERTY_CREATE_DATE + " TEXT)";
     }
 
     /**
@@ -34,7 +35,8 @@ public class PropertyRepo {
         List<PropertyList> propertyLists = new ArrayList<PropertyList>();
 
         SQLiteDatabase db = DBManager.getInstance().openDatabase();
-        String query = "SELECT * FROM " + Const.TABLE_PROPERTY;
+        String query = "SELECT * FROM " + Const.TABLE_PROPERTY +
+                " ORDER BY " + Const.FIELD_PROPERTY_CREATE_DATE + " DESC";
         Cursor cursor = db.rawQuery(query, null);
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -48,6 +50,7 @@ public class PropertyRepo {
                 property.setImg(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_IMG)));
                 property.setImgThmb(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_IMG_THMB)));
                 property.setStatus(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_STATUS)));
+                property.setCreateDate(cursor.getString(cursor.getColumnIndex(Const.FIELD_PROPERTY_CREATE_DATE)));
 
                 propertyLists.add(property);
             } while (cursor.moveToNext());
@@ -74,6 +77,7 @@ public class PropertyRepo {
         values.put(Const.FIELD_PROPERTY_IMG, propertyAdd.getImg());
         values.put(Const.FIELD_PROPERTY_IMG_THMB, propertyAdd.getImgThmb());
         values.put(Const.FIELD_PROPERTY_STATUS, propertyAdd.getStatus());
+        values.put(Const.FIELD_PROPERTY_CREATE_DATE, propertyAdd.getCreateDate());
 
         // Inserting row
         id = (int) db.insert(Const.TABLE_PROPERTY, null, values);

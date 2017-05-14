@@ -60,6 +60,7 @@ public class PropertyAddPresenterImp implements PropertyAddPresenter {
         obj.setImg(image);
         obj.setImgThmb(image);
         obj.setStatus("pending");
+        obj.setCreateDate(Utils.nowDateComplete());
         result = repo.insert(obj);
 
         if(result >= 1){

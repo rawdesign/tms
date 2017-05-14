@@ -12,9 +12,20 @@ import com.android.tmsoneprototype.R;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.UUID;
 
 public class Utils {
+
+    public static String nowDateComplete() {
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdformat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        return sdformat.format(date);
+    }
 
     public static String getImageUUID() {
         return UUID.randomUUID().toString();

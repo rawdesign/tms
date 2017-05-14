@@ -25,4 +25,5 @@ public class Const {
     public static final String FIELD_PROPERTY_IMG = "property_img";
     public static final String FIELD_PROPERTY_IMG_THMB = "property_img_thmb";
     public static final String FIELD_PROPERTY_STATUS = "property_status";
+    public static final String FIELD_PROPERTY_CREATE_DATE = "property_create_date";
 }
