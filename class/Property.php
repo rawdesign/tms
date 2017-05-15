@@ -13,9 +13,6 @@ class Property{
 				$result[] = $row;
 			}
 		}
-		if(is_array($result)){
-            $result[0]['total_data'] = $total_data;
-        }
 		return $result;
 	}
  

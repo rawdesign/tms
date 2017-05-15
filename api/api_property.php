@@ -19,10 +19,7 @@ if(isset($_GET['action'])){
 
 		$result = $obj_property->get_data();
 		if(is_array($result)){
-			$R_message = array("status" => "200", "message" => "Data Exist", 
-				"num_data" => count($result), 
-				"remaining" => 0,
-				"data" => $result);
+			$R_message = array("status" => "200", "message" => "Data Exist", "data" => $result);
 		}
 
 		$obj_connect->down();	
