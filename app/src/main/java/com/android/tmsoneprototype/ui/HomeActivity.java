@@ -1,5 +1,6 @@
 package com.android.tmsoneprototype.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -13,17 +14,31 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.tmsoneprototype.R;
+import com.android.tmsoneprototype.api.PropertyAPI;
+import com.android.tmsoneprototype.api.data.PropertyAddData;
+import com.android.tmsoneprototype.api.response.PropertyAddResponse;
+import com.android.tmsoneprototype.app.TMSOnePrototypeApp;
+import com.android.tmsoneprototype.db.model.PropertyList;
+import com.android.tmsoneprototype.db.repo.PropertyRepo;
+import com.android.tmsoneprototype.service.Retrofit;
 import com.android.tmsoneprototype.ui.menu.MenuFragment;
 import com.android.tmsoneprototype.ui.owner.OwnerFragment;
 import com.android.tmsoneprototype.ui.property.PropertyFragment;
 import com.android.tmsoneprototype.ui.property.add.PropertyAddActivity;
 import com.android.tmsoneprototype.util.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -68,6 +83,18 @@ public class HomeActivity extends AppCompatActivity {
                 Utils.intent(homeActivity, PropertyAddActivity.class);
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TMSOnePrototypeApp.activityResumed(); // On Pause notify the Application
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TMSOnePrototypeApp.activityResumed(); // On Resume notify the Application
     }
 
     private void initToolbar() {
@@ -144,6 +171,79 @@ public class HomeActivity extends AppCompatActivity {
                 fabOwner.show();
                 fabProperty.hide();
                 break;
+        }
+    }
+
+    public void checkNetwork(Context context, boolean isConnected) {
+        if(isConnected){
+            Utils.displayToast(context, "on", Toast.LENGTH_SHORT);
+            PropertyRepo repo = new PropertyRepo();
+            List<PropertyList> propertyLists = repo.getPending();
+            if(propertyLists != null && !propertyLists.isEmpty()){
+                for (int i = 0; i < propertyLists.size(); i++) {
+                    System.out.println("===============================");
+                    System.out.println("Id : " + propertyLists.get(i).getId());
+                    System.out.println("Owner : " + propertyLists.get(i).getOwner());
+                    System.out.println("Title : " + propertyLists.get(i).getTitle());
+                    System.out.println("Address : " + propertyLists.get(i).getAddress());
+                    System.out.println("Price : " + propertyLists.get(i).getPrice());
+                    System.out.println("Image : " + propertyLists.get(i).getImg());
+                    System.out.println("Create Date : " + propertyLists.get(i).getCreateDate());
+                    System.out.println("===============================");
+
+                    if(Utils.haveNetworkConnection(context)){
+                        Utils.displayToast(context, "Resync..", Toast.LENGTH_SHORT);
+                        //Create Upload Server Client
+                        PropertyAPI service = Retrofit.setup().create(PropertyAPI.class);
+
+                        //File creating from selected URL
+                        File file = new File(propertyLists.get(i).getImg());
+
+                        //Create RequestBody instance from file
+                        RequestBody requestOwner = RequestBody.create(MediaType.parse("text/plain"), propertyLists.get(i).getOwner());
+                        RequestBody requestTitle = RequestBody.create(MediaType.parse("text/plain"), propertyLists.get(i).getTitle());
+                        RequestBody requestAddress = RequestBody.create(MediaType.parse("text/plain"), propertyLists.get(i).getAddress());
+                        RequestBody requestPrice = RequestBody.create(MediaType.parse("text/plain"), propertyLists.get(i).getPrice());
+                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+                        //MultipartBody.Part is used to send also the actual file name
+                        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
+                        Call<PropertyAddResponse> call = service.insert(requestOwner, requestTitle, requestAddress, requestPrice, body);
+                        call.enqueue(new Callback<PropertyAddResponse>() {
+                            @Override
+                            public void onResponse(Call<PropertyAddResponse> call, Response<PropertyAddResponse> response) {
+                                String status = response.body().getStatus();
+                                switch (status) {
+                                    case "200":
+                                        int result;
+                                        List<PropertyAddData> propertyAddDatas = response.body().getData();
+                                        PropertyRepo repo = new PropertyRepo();
+                                        result = repo.updateStatus(propertyAddDatas.get(0).getPropertyTitle(), "success");
+
+                                        if(result >= 1){
+                                            PropertyFragment propertyFragment = new PropertyFragment();
+                                            propertyFragment.syncStatus(propertyAddDatas.get(0).getPropertyTitle());
+                                        }else{
+                                            //failed
+                                        }
+                                        break;
+                                    default:
+                                        //failed
+                                        break;
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<PropertyAddResponse> call, Throwable t) {
+                                // Log error here since request failed
+                            }
+                        });
+                    }
+                }
+            }
+        }else{
+            Utils.displayToast(context, "off", Toast.LENGTH_SHORT);
         }
     }
 
