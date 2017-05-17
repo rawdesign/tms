@@ -1,12 +1,16 @@
 package com.android.tmsoneprototype.ui;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +24,7 @@ import com.android.tmsoneprototype.api.response.PropertyAddResponse;
 import com.android.tmsoneprototype.app.TMSOnePrototypeApp;
 import com.android.tmsoneprototype.db.model.PropertyList;
 import com.android.tmsoneprototype.db.repo.PropertyRepo;
+import com.android.tmsoneprototype.service.NetworkReceiver;
 import com.android.tmsoneprototype.service.Retrofit;
 import com.android.tmsoneprototype.ui.menu.MenuFragment;
 import com.android.tmsoneprototype.ui.owner.OwnerFragment;
@@ -39,6 +44,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.android.tmsoneprototype.service.NetworkReceiver.IS_NETWORK_AVAILABLE;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -65,6 +72,18 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(homeActivity);
+        IntentFilter intentFilter = new IntentFilter(NetworkReceiver.NETWORK_AVAILABLE_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
+                if(isNetworkAvailable){
+                    checkNetwork(context, true);
+                }else{
+                    checkNetwork(context, false);
+                }
+            }
+        }, intentFilter);
 
         initToolbar();
         initViewPager(viewPager);
@@ -83,18 +102,6 @@ public class HomeActivity extends AppCompatActivity {
                 Utils.intent(homeActivity, PropertyAddActivity.class);
             }
         });
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        TMSOnePrototypeApp.activityResumed(); // On Pause notify the Application
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        TMSOnePrototypeApp.activityResumed(); // On Resume notify the Application
     }
 
     private void initToolbar() {
