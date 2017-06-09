@@ -16,5 +16,20 @@ class User{
         return $result;
     }
 
+    public function get_forget_password($email){
+        $result = 0;
+    
+        $text = "SELECT user_id, user_name, user_email, user_password 
+            FROM $this->table WHERE user_email = '$email' LIMIT 0,1";
+        $query = mysql_query($text);
+        if(mysql_num_rows($query) >= 1){
+            $result = array();
+            while($row = mysql_fetch_assoc($query)){
+                $result[] = $row;
+            }
+        }
+        return $result;
+    }
+
 }
 ?>
