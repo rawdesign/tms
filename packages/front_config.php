@@ -12,4 +12,6 @@ $smtp['url'] = "www.tamara.id";
 $smtp['to'] = "dean11.cliff@gmail.com";
 $smtp['from'] = "cliff@tamara.id";
 $smtp['password'] = "cliff123";
+
+$access_token['api-user'] = "Basic YXBpLXVzZXItalUzQWNXLVZzR1NyaE5OZnNZM0xmNXl1";
 ?>

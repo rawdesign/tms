@@ -1,4 +1,32 @@
 <?php
+if(!function_exists('isAuthorize'))
+{
+    function isAuthorize($authorization, $access_token){
+        return $authorization == $access_token ? true : false;
+    }
+}
+
+if(!function_exists('getAllHeaders'))
+{
+    function getAllHeaders(){
+        $headers = array();
+        $result = null;
+
+        if(!empty($_SERVER)){
+            $result = array();
+            foreach($_SERVER as $key => $value) {
+                if(strpos($key, 'HTTP_') === 0) {
+                    $headers = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
+                    $result[$headers] = $value;
+                }else{
+                    $result[$key] = $value;
+                }
+            }
+        }
+        return $result;
+    }
+}
+
 if(!function_exists('smtpmailer'))
 {
     function smtpmailer($to, $from_url, $from, $from_password, $from_name, $subject, $body){
