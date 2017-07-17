@@ -3,6 +3,17 @@ class User{
 
 	private $table = "t_user";
 
+    public function check_code($auth_token, $id){//check the token and id before changing the content
+        $result = 0;
+
+        $text = "SELECT user_id FROM $this->table WHERE user_auth_token = '$auth_token' AND user_id = '$id' LIMIT 0,1";
+        $query = mysql_query($text);
+        if(mysql_num_rows($query) == 1){
+            $result = 1;//can be used
+        }
+        return $result;  
+    }
+
     public function login($email, $password){
         $result = 0;//FAILED
         

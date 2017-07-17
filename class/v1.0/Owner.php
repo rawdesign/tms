@@ -17,7 +17,8 @@ class Owner{
         $total_page = ceil($total_data / $this->itemPerPage);
         $limitBefore = $page <= 1 || $page == null ? 0 : ($page-1) * $this->itemPerPage;
 
-        $text = "SELECT * FROM $this->table WHERE owner_status = 'success' LIMIT $limitBefore, $this->itemPerPage";
+        $text = "SELECT * FROM $this->table WHERE owner_status = 'success' 
+            ORDER BY owner_create_date DESC LIMIT $limitBefore, $this->itemPerPage";
         $query = mysql_query($text);
         if(mysql_num_rows($query) >= 1){
             $result = array();

@@ -14,4 +14,5 @@ $smtp['from'] = "cliff@tamara.id";
 $smtp['password'] = "cliff123";
 
 $access_token['api-user'] = "Basic YXBpLXVzZXItalUzQWNXLVZzR1NyaE5OZnNZM0xmNXl1";
+$access_token['api-owner'] = "Basic YXBpLW93bmVyLWpVM0FjVy1Wc0dTcmhOTmZzWTNMZjV5dQ==";
 ?>
