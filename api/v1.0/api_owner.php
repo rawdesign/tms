@@ -31,10 +31,11 @@ if(isset($_GET['action'])){
 				
 				$N_user_id = mysql_real_escape_string($_REQUEST['user_id']);
 				$N_auth_token = mysql_real_escape_string($_REQUEST['auth_token']);
+				$N_keyword = isset($_REQUEST['keyword']) ? $_REQUEST['keyword'] : "";
 				$N_page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 				
 				if($obj_user->check_code($N_auth_token, $N_user_id)){//check code
-					$result = $obj_owner->get_owner($N_page);
+					$result = $obj_owner->get_owner($N_page, $N_keyword);
 					//var_dump($result);
 					if(is_array($result)){
 						$itemperpage = 6;

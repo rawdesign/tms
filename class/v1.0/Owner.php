@@ -4,11 +4,26 @@ class Owner{
 	private $table = "t_owner";
     private $itemPerPage = 6;
 
-    public function get_owner($page=1){
+    public function get_owner($page=1, $keyword){
         $result = 0;
+        $cond = "";
+        if($keyword != ""){
+            $keywords = explode(" ", $keyword);
+            if(is_array($keywords)){
+                $q_string = "";
+                $last_index = intval(count($keywords)) - 1;
+                for($i = 0; $i < count($keywords); $i++){
+                    $q_string = $q_string . " owner_name LIKE '%".$keywords[$i]."%' ";
+                    if($i != $last_index){
+                      $q_string = $q_string . " OR ";
+                    }
+                }
+                $cond = "AND ".$q_string;
+            }
+        }
 
         //get total data
-        $text_total = "SELECT owner_id FROM $this->table WHERE owner_status = 'success'";
+        $text_total = "SELECT owner_id FROM $this->table WHERE owner_status = 'success' $cond";
         $query_total = mysql_query($text_total);
         $total_data = mysql_num_rows($query_total);
         $total_data = $total_data < 1 ? 0 : $total_data;
@@ -17,7 +32,7 @@ class Owner{
         $total_page = ceil($total_data / $this->itemPerPage);
         $limitBefore = $page <= 1 || $page == null ? 0 : ($page-1) * $this->itemPerPage;
 
-        $text = "SELECT * FROM $this->table WHERE owner_status = 'success' 
+        $text = "SELECT * FROM $this->table WHERE owner_status = 'success' $cond
             ORDER BY owner_create_date DESC LIMIT $limitBefore, $this->itemPerPage";
         $query = mysql_query($text);
         if(mysql_num_rows($query) >= 1){
