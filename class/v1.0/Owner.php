@@ -50,5 +50,18 @@ class Owner{
         return $result;
     }
 
+    public function insert_data($user_id, $token, $name, $location, $phone, $email, $ktp, $birthday, $img, $img_thmb, $status, $num_property, $create_date){
+        $result = 0;
+
+        $text = "INSERT INTO $this->table (owner_user_id, owner_token, owner_name, owner_location, owner_phone, owner_email, owner_ktp, owner_birthday, owner_img, owner_img_thmb, owner_status, owner_num_property, owner_create_date) 
+            VALUES ('$user_id', '$token', '$name', '$location', '$phone', '$email', '$ktp', '$birthday', '$img', '$img_thmb', '$status', '$num_property', '$create_date')";
+        $query = mysql_query($text);
+        if($query){
+            $result = 1;
+        }
+        //$result = $text;
+        return $result;
+    }
+
 }
 ?>
