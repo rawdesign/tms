@@ -236,6 +236,9 @@ RewriteRule (.*) %{REQUEST_URI}/ [R=301,L]
 ErrorDocument 404 "<H1>Page not found</H1>"
 
 #HTACCESS ALL API
+#code to redirect to api/api_tools.php?action=get_data
+RewriteRule ^api/(.*)/tools/data/$ api/$1/api_tools.php?action=get_data
+
 #code to redirect to api/api_user.php?action=login
 RewriteRule ^api/(.*)/user/login/$ api/$1/api_user.php?action=login
 
