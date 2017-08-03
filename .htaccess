@@ -247,3 +247,11 @@ RewriteRule ^api/(.*)/user/forget-password/send/$ api/$1/api_user.php?action=for
 
 #code to redirect to api/api_owner.php?action=insert_data
 RewriteRule ^api/(.*)/owner/insert/$ api/$1/api_owner.php?action=insert_data
+
+#code to redirect to api/api_owner.php?action=sync
+RewriteRule ^api/(.*)/owner/sync/$ api/$1/api_owner.php?action=sync
+
+
+
+
+

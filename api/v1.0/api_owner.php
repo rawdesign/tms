@@ -128,6 +128,31 @@ if(isset($_GET['action'])){
 				echo json_encode($R_message);	
 			}//end insert owner
 
+			//===================================== sync ========================================
+			//start sync
+			else if($_GET['action'] == 'sync' && isset($_REQUEST['user_id']) && isset($_REQUEST['auth_token'])){//START sync
+				$obj_connect->up();	
+				$R_message = array("status" => "400", "message" => "No Data");
+				
+				$N_user_id = mysql_real_escape_string($_REQUEST['user_id']);
+				$N_auth_token = mysql_real_escape_string($_REQUEST['auth_token']);
+				$N_data = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
+
+				if($obj_user->check_code($N_auth_token, $N_user_id)){//check code
+					$result = $obj_owner->get_owner_sync($N_user_id, $N_data);
+					//var_dump($result);
+					if(is_array($result)){
+						$R_message = array("status" => "200", "message" => "Data Exist", "data" => $result);
+					}
+				}//check code
+				else{
+					$R_message = array("status" => "401", "message" => "Unauthorized");
+				}
+
+				$obj_connect->down();	
+				echo json_encode($R_message);	
+			}//end sync
+
 			else{
 				$R_message = array("status" => "404", "message" => "Action Not Found");
 				echo json_encode($R_message);

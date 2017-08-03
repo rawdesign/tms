@@ -4,6 +4,37 @@ class Owner{
 	private $table = "t_owner";
     private $itemPerPage = 6;
 
+    public function get_owner_sync($user_id, $datas){
+        $result = 0;
+        $data = json_decode($datas);
+        if(is_array($data)){
+            $q_string = "";
+            $count = 1;
+            foreach($data as $i){
+                $seperate = $count == count($data) ? "" : ",";
+                $q_string .= "'".$i->token."'".$seperate;
+                $count++;
+            }
+            $cond = "AND owner_token NOT IN(".$q_string.")";
+        }else{
+            $cond = "";
+        }
+
+        $text = "SELECT owner_id, owner_user_id, owner_token, owner_name, owner_location, owner_phone,
+            owner_email, owner_ktp, owner_birthday, owner_img, owner_status, owner_num_property,
+            owner_create_date FROM $this->table WHERE owner_status = 'success' AND owner_user_id = '$user_id' 
+            $cond ORDER BY owner_create_date ASC";
+        $query = mysql_query($text);
+        if(mysql_num_rows($query) >= 1){
+            $result = array();
+            while($row = mysql_fetch_assoc($query)){
+                $result[] = $row;
+            }
+        }
+        //$result = $text;
+        return $result;
+    }
+
     public function get_owner($page=1, $keyword){
         $result = 0;
         $cond = "";
