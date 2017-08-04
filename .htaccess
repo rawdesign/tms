@@ -251,6 +251,9 @@ RewriteRule ^api/(.*)/owner/insert/$ api/$1/api_owner.php?action=insert_data
 #code to redirect to api/api_owner.php?action=sync
 RewriteRule ^api/(.*)/owner/sync/$ api/$1/api_owner.php?action=sync
 
+#code to redirect to api/api_owner.php?action=delete_data
+RewriteRule ^api/(.*)/owner/delete/$ api/$1/api_owner.php?action=delete_data
+
 
 
 
