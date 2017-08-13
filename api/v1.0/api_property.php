@@ -38,10 +38,24 @@ if(isset($_GET['action'])){
 				$N_token = mysql_real_escape_string($_REQUEST['token']);
 				$N_owner = mysql_real_escape_string($_REQUEST['owner']);
 				$N_title = mysql_real_escape_string($_REQUEST['title']);
+				$N_price = mysql_real_escape_string($_REQUEST['price']);
+				$N_address = mysql_real_escape_string($_REQUEST['address']);
+				$N_description = mysql_real_escape_string($_REQUEST['description']);
+				$N_type = mysql_real_escape_string($_REQUEST['type']);
+				$N_status_property = mysql_real_escape_string($_REQUEST['status_property']);
+				$N_bed = mysql_real_escape_string($_REQUEST['bed']);
+				$N_bath = mysql_real_escape_string($_REQUEST['bath']);
+				$N_floor = mysql_real_escape_string($_REQUEST['floor']);
+				$N_luas_apartment = mysql_real_escape_string($_REQUEST['luas_apartment']);
+				$N_luas_bangunan = mysql_real_escape_string($_REQUEST['luas_bangunan']);
+				$N_luas_tanah = mysql_real_escape_string($_REQUEST['luas_tanah']);
+				$N_lebar_depan = mysql_real_escape_string($_REQUEST['lebar_depan']);
+				$N_sertifikat = mysql_real_escape_string($_REQUEST['sertifikat']);
+				$N_create_date = mysql_real_escape_string($_REQUEST['create_date']);
 				$N_status = "success";
 
 				if($obj_user->check_code($N_auth_token, $N_user_id)){//check code
-					$result = $obj_property->insert_data($N_token, $N_owner, $N_title, $N_status);
+					$result = $obj_property->insert_data($N_token, $N_owner, $N_title, $N_price, $N_address, $N_description, $N_type, $N_status_property, $N_bed, $N_bath, $N_floor, $N_luas_apartment, $N_luas_bangunan, $N_luas_tanah, $N_lebar_depan, $N_sertifikat, $N_status, $N_create_date);
 					//var_dump($result);
 					if($result == 1){
 						//insert image
@@ -49,6 +63,7 @@ if(isset($_GET['action'])){
 						if(isset($_FILES['image']['name'])){
 							for($i = 0; $i < count($_FILES['image']['name']); $i++){
 								if(!empty($_FILES['image']['name'][$i])){
+									$N_image_token = mysql_real_escape_string($_REQUEST['image_token'][$i]);
 									$allowed_ext = array('jpg', 'jpeg', 'png', 'gif');
 									$file_name = cleanSpace($_FILES['image']['name'][$i]);
 									$file_ext = strtolower(end(explode('.', $file_name)));
@@ -75,7 +90,7 @@ if(isset($_GET['action'])){
 												$image->save($file_locThmb);
 											}
 											
-											$obj_image->insert_data($N_token, $file_loc1, $file_locThmb1);
+											$obj_image->insert_data($N_image_token, $N_token, $file_loc1, $file_locThmb1);
 										}
 									}
 								}
