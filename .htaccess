@@ -257,6 +257,9 @@ RewriteRule ^api/(.*)/owner/delete/$ api/$1/api_owner.php?action=delete_data
 #code to redirect to api/api_property.php?action=insert_data
 RewriteRule ^api/(.*)/property/insert/$ api/$1/api_property.php?action=insert_data
 
+#code to redirect to api/api_property.php?action=sync
+RewriteRule ^api/(.*)/property/sync/$ api/$1/api_property.php?action=sync
+
 
 
 
