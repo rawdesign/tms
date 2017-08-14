@@ -19,7 +19,7 @@ class Property{
             $cond = "";
         }
 
-        $text = "SELECT property_id, property_token, property_title, property_address, property_description, 
+        $text = "SELECT property_id, property_token, property_owner, property_title, property_address, property_description, 
         	property_price, property_type, property_status_property, property_bed, property_bath, property_floor, 
         	property_luas_apartment, property_luas_bangunan, property_luas_tanah, property_lebar_depan,
             property_sertifikat, property_status, property_create_date FROM $this->table 
