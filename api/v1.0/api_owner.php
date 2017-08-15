@@ -68,7 +68,6 @@ if(isset($_GET['action'])){
 				$N_email = mysql_real_escape_string($_REQUEST['email']);
 				$N_ktp = mysql_real_escape_string($_REQUEST['ktp']);
 				$N_birthday = mysql_real_escape_string($_REQUEST['birthday']);
-				$N_num_property = mysql_real_escape_string($_REQUEST['num_property']);
 				$N_create_date = mysql_real_escape_string($_REQUEST['create_date']);
 				$N_status = "success";
 				$file_loc1 = "";
@@ -114,7 +113,7 @@ if(isset($_GET['action'])){
 						}
 					}
 
-					$result = $obj_owner->insert_data($N_user_id, $N_token, $N_name, $N_location, $N_phone, $N_email, $N_ktp, $N_birthday, $file_loc1, $file_locThmb1, $N_status, $N_num_property, $N_create_date);
+					$result = $obj_owner->insert_data($N_user_id, $N_token, $N_name, $N_location, $N_phone, $N_email, $N_ktp, $N_birthday, $file_loc1, $file_locThmb1, $N_status, $N_create_date);
 					//var_dump($result);
 					if($result == 1){
 						$R_message = array("status" => "200", "message" => "Insert Data Success");

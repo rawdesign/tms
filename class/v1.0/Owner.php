@@ -3,6 +3,7 @@ class Owner{
 
 	private $table = "t_owner";
     private $itemPerPage = 6;
+    private $joinProperty = "LEFT JOIN t_property ON property_owner = owner_token";
 
     public function get_owner_sync($user_id, $datas){
         $result = 0;
@@ -20,10 +21,10 @@ class Owner{
             $cond = "";
         }
 
-        $text = "SELECT owner_id, owner_user_id, owner_token, owner_name, owner_location, owner_phone,
-            owner_email, owner_ktp, owner_birthday, owner_img, owner_status, owner_num_property,
-            owner_create_date FROM $this->table WHERE owner_status = 'success' AND owner_user_id = '$user_id' 
-            $cond ORDER BY owner_create_date ASC";
+        $text = "SELECT COUNT(property_token) AS counter, owner_id, owner_user_id, owner_token, owner_name, 
+            owner_location, owner_phone, owner_email, owner_ktp, owner_birthday, owner_img, owner_status, 
+            owner_create_date FROM $this->table $this->joinProperty WHERE owner_status = 'success' 
+            AND owner_user_id = '$user_id' $cond GROUP BY owner_token ORDER BY owner_create_date ASC";
         $query = mysql_query($text);
         if(mysql_num_rows($query) >= 1){
             $result = array();
@@ -81,11 +82,11 @@ class Owner{
         return $result;
     }
 
-    public function insert_data($user_id, $token, $name, $location, $phone, $email, $ktp, $birthday, $img, $img_thmb, $status, $num_property, $create_date){
+    public function insert_data($user_id, $token, $name, $location, $phone, $email, $ktp, $birthday, $img, $img_thmb, $status, $create_date){
         $result = 0;
 
-        $text = "INSERT INTO $this->table (owner_user_id, owner_token, owner_name, owner_location, owner_phone, owner_email, owner_ktp, owner_birthday, owner_img, owner_img_thmb, owner_status, owner_num_property, owner_create_date) 
-            VALUES ('$user_id', '$token', '$name', '$location', '$phone', '$email', '$ktp', '$birthday', '$img', '$img_thmb', '$status', '$num_property', '$create_date')";
+        $text = "INSERT INTO $this->table (owner_user_id, owner_token, owner_name, owner_location, owner_phone, owner_email, owner_ktp, owner_birthday, owner_img, owner_img_thmb, owner_status, owner_create_date) 
+            VALUES ('$user_id', '$token', '$name', '$location', '$phone', '$email', '$ktp', '$birthday', '$img', '$img_thmb', '$status', '$create_date')";
         $query = mysql_query($text);
         if($query){
             $result = 1;
