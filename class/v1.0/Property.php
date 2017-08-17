@@ -58,5 +58,56 @@ class Property{
 		return $result;
 	}
 
+    public function delete_data($token, $path){
+        $result = 0;
+        $this->remove_image($token, $path); //remove image before
+        $this->delete_data_image($token); //delete data image
+
+        $text = "DELETE FROM $this->table WHERE property_token = '$token'";
+        $query = mysql_query($text);
+        if(mysql_affected_rows() == 1){
+            $result = 1;
+        }
+        return $result;
+    }
+
+    public function delete_data_image($token){
+        $result = 0;
+        
+        $text = "DELETE FROM t_property_image WHERE pi_property = '$token'";
+        $query = mysql_query($text);
+        if(mysql_affected_rows() == 1){
+            $result = 1;
+        }
+        return $result;
+    }
+
+    public function remove_image($token, $path){
+        $result = 0;
+        $flag_img = 0;
+        $flag_img_thmb = 0;
+
+        $text = "SELECT pi_img, pi_img_thmb FROM t_property_image WHERE pi_property = '$token'";
+        $query = mysql_query($text);
+        while($row = mysql_fetch_array($query, MYSQL_ASSOC)){
+            $deleteImg = $path.$row['pi_img'];
+            if(file_exists($deleteImg)){
+                unlink($deleteImg);
+                $flag_img = 1;
+            }
+
+            $deleteImgThmb = $path.$row['pi_img_thmb'];
+            if(file_exists($deleteImgThmb)){
+                unlink($deleteImgThmb);
+                $flag_img_thmb = 1;
+            }
+
+            if($flag_img == 1 && $flag_img_thmb ==1){
+                $result = 1;
+            }
+        }
+        return $result;
+    }
+
 }
 ?>

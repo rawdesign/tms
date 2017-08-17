@@ -260,6 +260,8 @@ RewriteRule ^api/(.*)/property/insert/$ api/$1/api_property.php?action=insert_da
 #code to redirect to api/api_property.php?action=sync
 RewriteRule ^api/(.*)/property/sync/$ api/$1/api_property.php?action=sync
 
+#code to redirect to api/api_property.php?action=delete_data
+RewriteRule ^api/(.*)/property/delete/$ api/$1/api_property.php?action=delete_data
 
 
 

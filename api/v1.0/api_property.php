@@ -133,6 +133,31 @@ if(isset($_GET['action'])){
 				echo json_encode($R_message);	
 			}//end sync
 
+			//===================================== delete ========================================
+			//start delete
+			else if($_GET['action'] == 'delete_data' && isset($_REQUEST['user_id']) && isset($_REQUEST['auth_token'])){//START delete
+				$obj_connect->up();	
+				$R_message = array("status" => "400", "message" => "Delete failed");
+				
+				$N_user_id = mysql_real_escape_string($_REQUEST['user_id']);
+				$N_auth_token = mysql_real_escape_string($_REQUEST['auth_token']);
+				$N_token = mysql_real_escape_string($_REQUEST['token']);
+
+				if($obj_user->check_code($N_auth_token, $N_user_id)){//check code
+					$result = $obj_property->delete_data($N_token, $global['root-url']);
+					//var_dump($result);
+					if($result >= 1){
+						$R_message = array("status" => "200", "message" => "Delete success");
+					}
+				}//check code
+				else{
+					$R_message = array("status" => "401", "message" => "Unauthorized");
+				}
+
+				$obj_connect->down();	
+				echo json_encode($R_message);	
+			}//end delete
+
 			else{
 				$R_message = array("status" => "404", "message" => "Action Not Found");
 				echo json_encode($R_message);
