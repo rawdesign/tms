@@ -116,20 +116,22 @@ class Owner{
         $query = mysql_query($text);
         if(mysql_num_rows($query) == 1){
             $row = mysql_fetch_assoc($query);
-            $deleteImg = $path.$row['owner_img'];
-            if (file_exists($deleteImg)) {
-                unlink($deleteImg);
-                $flag_img = 1;
-            }
+            if($row['owner_img'] != "" && $row['owner_img_thmb'] != ""){
+                $deleteImg = $path.$row['owner_img'];
+                if (file_exists($deleteImg)) {
+                    unlink($deleteImg);
+                    $flag_img = 1;
+                }
 
-            $deleteImgThmb = $path.$row['owner_img_thmb'];
-            if (file_exists($deleteImgThmb)) {
-                unlink($deleteImgThmb);
-                $flag_img_thmb = 1;
-            }
-            
-            if($flag_img == 1 && $flag_img_thmb ==1){
-                $result = 1;
+                $deleteImgThmb = $path.$row['owner_img_thmb'];
+                if (file_exists($deleteImgThmb)) {
+                    unlink($deleteImgThmb);
+                    $flag_img_thmb = 1;
+                }
+                
+                if($flag_img == 1 && $flag_img_thmb ==1){
+                    $result = 1;
+                }
             }
         }
         return $result;

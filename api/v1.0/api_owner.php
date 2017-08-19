@@ -20,6 +20,9 @@ if(isset($_GET['action'])){
 			require_once($global['root-url-model'].$version."/Owner.php");
 			$obj_owner = new Owner();
 
+			require_once($global['root-url-model'].$version."/Property.php");
+			$obj_property = new Property();
+
 			require_once($global['root-url-model'].$version."/User.php");
 			$obj_user = new User();
 
@@ -166,6 +169,7 @@ if(isset($_GET['action'])){
 					$result = $obj_owner->delete_data($N_token, $global['root-url']);
 					//var_dump($result);
 					if($result >= 1){
+						$obj_property->delete_data_by_owner($N_token, $global['root-url']);
 						$R_message = array("status" => "200", "message" => "Delete success");
 					}
 				}//check code
