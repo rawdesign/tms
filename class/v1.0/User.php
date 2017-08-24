@@ -42,5 +42,16 @@ class User{
         return $result;
     }
 
+    public function update_data($id, $name){
+        $result = 0;
+
+        $text = "UPDATE $this->table SET user_name = '$name' WHERE user_id = '$id'";
+        $query = mysql_query($text);    
+        if(mysql_affected_rows() == 1){
+            $result = 1;
+        }
+        return $result;
+    }
+
 }
 ?>

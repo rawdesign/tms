@@ -67,6 +67,30 @@ if(isset($_GET['action'])){
 				echo json_encode($R_message);	
 			}//end forget password
 
+			//===================================== update data ========================================
+			//start update data
+			else if($_GET['action'] == 'update_data' && isset($_REQUEST['user_id']) && isset($_REQUEST['auth_token'])){
+				$obj_connect->up();	
+				$R_message = array("status" => "400", "message" => "Edit profile failed");
+				$N_user_id = mysql_real_escape_string($_REQUEST['user_id']);
+				$N_auth_token = mysql_real_escape_string($_REQUEST['auth_token']);
+
+				$N_name = mysql_real_escape_string($_REQUEST['name']);
+
+				if($obj_user->check_code($N_auth_token, $N_user_id)){//check code
+					$result = $obj_user->update_data($N_user_id, $N_name);
+					if($result == 1){
+						$R_message = array("status" => "200", "message" => "Edit profile success");
+					}
+				}//check code
+				else{
+					$R_message = array("status" => "401", "message" => "Unauthorized");
+				}
+
+				$obj_connect->down();
+				echo json_encode($R_message);	
+			}//end update data
+
 			else{
 				$R_message = array("status" => "404", "message" => "Action Not Found");
 				echo json_encode($R_message);
