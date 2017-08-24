@@ -91,6 +91,43 @@ if(isset($_GET['action'])){
 				echo json_encode($R_message);	
 			}//end update data
 
+			//===================================== change password ========================================
+			//start change password
+			else if($_GET['action'] == 'change_password' && isset($_REQUEST['user_id']) && isset($_REQUEST['auth_token'])){
+				$obj_connect->up();	
+				$R_message = array("status" => "404", "message" => "Change password failed");
+				$N_user_id = mysql_real_escape_string($_REQUEST['user_id']);
+				$N_auth_token = mysql_real_escape_string($_REQUEST['auth_token']);
+
+				$N_old_password = mysql_real_escape_string($_REQUEST['old_password']);
+				$N_new_password = mysql_real_escape_string($_REQUEST['new_password']);
+				$N_confirm_password = mysql_real_escape_string($_REQUEST['confirm_password']);
+				$old_password = $obj_encrypt->encode($N_old_password);
+				$new_password = $obj_encrypt->encode($N_new_password);
+
+				if($obj_user->check_code($N_auth_token, $N_user_id)){//check code
+					$check_password = $obj_user->check_password($N_user_id, $old_password);
+					if($check_password == 1){
+						if($N_new_password == $N_confirm_password){
+							$result = $obj_user->update_password($N_user_id, $old_password, $new_password);
+							if($result == 1){
+								$R_message = array("status" => "200", "message" => "Change password success");
+							}
+						}else{
+							$R_message = array("status" => "401", "message" => "Confirm password doesn't match");
+						}
+					}else{
+						$R_message = array("status" => "401", "message" => "Your old password doesn't match");
+					}
+				}//check code
+				else{
+					$R_message = array("status" => "401", "message" => "Unauthorized");
+				}
+
+				$obj_connect->down();
+				echo json_encode($R_message);	
+			}//end change password
+
 			else{
 				$R_message = array("status" => "404", "message" => "Action Not Found");
 				echo json_encode($R_message);

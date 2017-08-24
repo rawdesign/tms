@@ -3,6 +3,17 @@ class User{
 
 	private $table = "t_user";
 
+    public function check_password($id, $password){
+        $result = 0;
+    
+        $text = "SELECT user_password FROM $this->table WHERE user_id = '$id' AND user_password = '$password' LIMIT 0,1";
+        $query = mysql_query($text);
+        if(mysql_num_rows($query) == 1){
+            $result = 1;
+        }
+        return $result;
+    }
+
     public function check_code($auth_token, $id){//check the token and id before changing the content
         $result = 0;
 
@@ -47,6 +58,17 @@ class User{
 
         $text = "UPDATE $this->table SET user_name = '$name' WHERE user_id = '$id'";
         $query = mysql_query($text);    
+        if(mysql_affected_rows() == 1){
+            $result = 1;
+        }
+        return $result;
+    }
+
+    public function update_password($id, $old_password, $new_password){
+        $result = 0;
+
+        $text = "UPDATE $this->table SET user_password = '$new_password' WHERE user_id = '$id' AND user_password = '$old_password'";
+        $query = mysql_query($text);
         if(mysql_affected_rows() == 1){
             $result = 1;
         }

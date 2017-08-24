@@ -248,6 +248,9 @@ RewriteRule ^api/(.*)/user/forget-password/send/$ api/$1/api_user.php?action=for
 #code to redirect to api/api_user.php?action=update_date
 RewriteRule ^api/(.*)/user/edit/$ api/$1/api_user.php?action=update_data
 
+#code to redirect to api/api_user.php?action=change_password
+RewriteRule ^api/(.*)/user/change-password/$ api/$1/api_user.php?action=change_password
+
 #code to redirect to api/api_owner.php?action=insert_data
 RewriteRule ^api/(.*)/owner/insert/$ api/$1/api_owner.php?action=insert_data
 
