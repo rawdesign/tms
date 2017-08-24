@@ -263,6 +263,9 @@ RewriteRule ^api/(.*)/property/sync/$ api/$1/api_property.php?action=sync
 #code to redirect to api/api_property.php?action=delete_data
 RewriteRule ^api/(.*)/property/delete/$ api/$1/api_property.php?action=delete_data
 
+#code to redirect to api/api_feedback.php?action=send
+RewriteRule ^api/(.*)/feedback/send/$ api/$1/api_feedback.php?action=send
+
 
 
 
