@@ -66,13 +66,21 @@ if(isset($_GET['action'])){
 				//field
 				$N_token = mysql_real_escape_string($_REQUEST['token']);
 				$N_name = mysql_real_escape_string($_REQUEST['name']);
-				$N_location = mysql_real_escape_string($_REQUEST['location']);
-				$N_phone = mysql_real_escape_string($_REQUEST['phone']);
 				$N_email = mysql_real_escape_string($_REQUEST['email']);
-				$N_ktp = mysql_real_escape_string($_REQUEST['ktp']);
+				$N_tempat_lahir = mysql_real_escape_string($_REQUEST['tempat_lahir']);
 				$N_birthday = mysql_real_escape_string($_REQUEST['birthday']);
-				$N_create_date = mysql_real_escape_string($_REQUEST['create_date']);
+				$N_gender = mysql_real_escape_string($_REQUEST['gender']);
+				$N_province = mysql_real_escape_string($_REQUEST['province']);
+				$N_city = mysql_real_escape_string($_REQUEST['city']);
+				$N_kecamatan = mysql_real_escape_string($_REQUEST['kecamatan']);
+				$N_kelurahan = mysql_real_escape_string($_REQUEST['kelurahan']);
+				$N_address = mysql_real_escape_string($_REQUEST['address']);
+				$N_phone1 = mysql_real_escape_string($_REQUEST['phone1']);
+				$N_phone2 = mysql_real_escape_string($_REQUEST['phone2']);
+				$N_phone3 = mysql_real_escape_string($_REQUEST['phone3']);
+				$N_ktp = mysql_real_escape_string($_REQUEST['ktp']);
 				$N_status = "success";
+				$N_create_date = mysql_real_escape_string($_REQUEST['create_date']);
 				$file_loc1 = "";
 				$file_locThmb1 = "";
 
@@ -116,7 +124,7 @@ if(isset($_GET['action'])){
 						}
 					}
 
-					$result = $obj_owner->insert_data($N_user_id, $N_token, $N_name, $N_location, $N_phone, $N_email, $N_ktp, $N_birthday, $file_loc1, $file_locThmb1, $N_status, $N_create_date);
+					$result = $obj_owner->insert_data($N_user_id, $N_token, $N_name, $N_email, $N_tempat_lahir, $N_birthday, $N_gender, $N_province, $N_city, $N_kecamatan, $N_kelurahan, $N_address, $N_phone1, $N_phone2, $N_phone3, $N_ktp, $file_loc1, $file_locThmb1, $N_status, $N_create_date);
 					//var_dump($result);
 					if($result == 1){
 						$R_message = array("status" => "200", "message" => "Insert Data Success");

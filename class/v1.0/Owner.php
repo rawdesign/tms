@@ -22,9 +22,11 @@ class Owner{
         }
 
         $text = "SELECT COUNT(property_token) AS counter, owner_id, owner_user_id, owner_token, owner_name, 
-            owner_location, owner_phone, owner_email, owner_ktp, owner_birthday, owner_img, owner_status, 
-            owner_create_date FROM $this->table $this->joinProperty WHERE owner_status = 'success' 
-            AND owner_user_id = '$user_id' $cond GROUP BY owner_token ORDER BY owner_create_date ASC";
+            owner_email, owner_tempat_lahir, owner_birthday, owner_gender, owner_province, owner_city,
+            owner_kecamatan, owner_kelurahan, owner_address, owner_phone1, owner_phone2, owner_phone3, 
+            owner_ktp, owner_img, owner_status, owner_create_date FROM $this->table $this->joinProperty 
+            WHERE owner_status = 'success' AND owner_user_id = '$user_id' $cond GROUP BY owner_token 
+            ORDER BY owner_create_date ASC";
         $query = mysql_query($text);
         if(mysql_num_rows($query) >= 1){
             $result = array();
@@ -82,11 +84,11 @@ class Owner{
         return $result;
     }
 
-    public function insert_data($user_id, $token, $name, $location, $phone, $email, $ktp, $birthday, $img, $img_thmb, $status, $create_date){
+    public function insert_data($user_id, $token, $name, $email, $tempat_lahir, $birthday, $gender, $province, $city, $kecamatan, $kelurahan, $address, $phone1, $phone2, $phone3, $ktp, $img, $img_thmb, $status, $create_date){
         $result = 0;
 
-        $text = "INSERT INTO $this->table (owner_user_id, owner_token, owner_name, owner_location, owner_phone, owner_email, owner_ktp, owner_birthday, owner_img, owner_img_thmb, owner_status, owner_create_date) 
-            VALUES ('$user_id', '$token', '$name', '$location', '$phone', '$email', '$ktp', '$birthday', '$img', '$img_thmb', '$status', '$create_date')";
+        $text = "INSERT INTO $this->table (owner_user_id, owner_token, owner_name, owner_email, owner_tempat_lahir, owner_birthday, owner_gender, owner_province, owner_city, owner_kecamatan, owner_kelurahan, owner_address, owner_phone1, owner_phone2, owner_phone3, owner_ktp, owner_img, owner_img_thmb, owner_status, owner_create_date) 
+            VALUES ('$user_id', '$token', '$name', '$email', '$tempat_lahir', '$birthday', '$gender', '$province', '$city', '$kecamatan', '$kelurahan', '$address', '$phone1', '$phone2', '$phone3', '$ktp', '$img', '$img_thmb', '$status', '$create_date')";
         $query = mysql_query($text);
         if($query){
             $result = 1;
