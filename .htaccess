@@ -272,6 +272,9 @@ RewriteRule ^api/(.*)/property/delete/$ api/$1/api_property.php?action=delete_da
 #code to redirect to api/api_feedback.php?action=send
 RewriteRule ^api/(.*)/feedback/send/$ api/$1/api_feedback.php?action=send
 
+#code to redirect to api/api_province.php?action=get_province
+RewriteRule ^api/(.*)/province/list/$ api/$1/api_province.php?action=get_province
+
 
 
 
