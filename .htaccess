@@ -281,6 +281,9 @@ RewriteRule ^api/(.*)/city/province/([0-9]+)/$ api/$1/api_city.php?action=get_ci
 #code to redirect to api/api_kecamatan.php?action=get_kecamatan
 RewriteRule ^api/(.*)/kecamatan/city/([0-9]+)/$ api/$1/api_kecamatan.php?action=get_kecamatan&city=$2
 
+#code to redirect to api/api_kelurahan.php?action=get_kelurahan
+RewriteRule ^api/(.*)/kelurahan/kecamatan/([0-9]+)/$ api/$1/api_kelurahan.php?action=get_kelurahan&kecamatan=$2
+
 
 
 
