@@ -251,8 +251,8 @@ RewriteRule ^api/(.*)/user/edit/$ api/$1/api_user.php?action=update_data
 #code to redirect to api/api_user.php?action=change_password
 RewriteRule ^api/(.*)/user/change-password/$ api/$1/api_user.php?action=change_password
 
-#code to redirect to api/api_owner.php?action=insert_data
-RewriteRule ^api/(.*)/owner/insert/$ api/$1/api_owner.php?action=insert_data
+#code to redirect to api/api_owner.php?action=post
+RewriteRule ^api/(.*)/owner/post/$ api/$1/api_owner.php?action=post
 
 #code to redirect to api/api_owner.php?action=sync
 RewriteRule ^api/(.*)/owner/sync/$ api/$1/api_owner.php?action=sync

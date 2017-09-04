@@ -5,6 +5,19 @@ class Owner{
     private $itemPerPage = 6;
     private $joinProperty = "LEFT JOIN t_property ON property_owner = owner_token";
 
+    public function check_exist($token){
+        $result = 0;
+
+        $text = "SELECT owner_token FROM $this->table WHERE owner_token = '$token'";
+        $query = mysql_query($text);
+        if(mysql_num_rows($query) >= 1){
+            $row = mysql_fetch_array($query, MYSQL_ASSOC);
+            $result = 1;
+        }
+        //$result = $text;
+        return $result;
+    }
+
     public function get_owner_sync($user_id, $datas){
         $result = 0;
         $data = json_decode($datas);
@@ -91,6 +104,25 @@ class Owner{
             VALUES ('$user_id', '$token', '$name', '$email', '$tempat_lahir', '$birthday', '$gender', '$province', '$city', '$kecamatan', '$kelurahan', '$address', '$phone1', '$phone2', '$phone3', '$ktp', '$img', '$img_thmb', '$status', '$create_date')";
         $query = mysql_query($text);
         if($query){
+            $result = 1;
+        }
+        //$result = $text;
+        return $result;
+    }
+
+    public function update_data($token, $name, $email, $tempat_lahir, $birthday, $gender, $province, $city, $kecamatan, $kelurahan, $address, $phone1, $phone2, $phone3, $ktp, $img, $img_thmb, $path){
+        $result = 0;
+        $cond = "";
+        if($img != "" && $img_thmb != ""){
+            $this->remove_image($token, $path); //remove image before
+            $cond = ", owner_img = '$img', owner_img_thmb = '$img_thmb'";
+        }
+
+        $text = "UPDATE $this->table SET owner_name = '$name', owner_email = '$email', owner_tempat_lahir = '$tempat_lahir', owner_birthday = '$birthday', owner_gender = '$gender', owner_province = '$province', 
+            owner_city = '$city', owner_kecamatan = '$kecamatan', owner_kelurahan = '$kelurahan', owner_address = '$address', owner_phone1 = '$phone1', owner_phone2 = '$phone2', owner_phone3 = '$phone3', 
+            owner_ktp = '$ktp' $cond WHERE owner_token = '$token'";
+        $query = mysql_query($text);
+        if(mysql_affected_rows() == 1){
             $result = 1;
         }
         //$result = $text;

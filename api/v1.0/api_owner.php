@@ -55,11 +55,10 @@ if(isset($_GET['action'])){
 				echo json_encode($R_message);	
 			}//end get owner
 
-			//===================================== insert owner ========================================
-			//start insert owner
-			else if($_GET['action'] == 'insert_data' && isset($_REQUEST['user_id']) && isset($_REQUEST['auth_token'])){
+			//===================================== post ========================================
+			//start post
+			else if($_GET['action'] == 'post' && isset($_REQUEST['user_id']) && isset($_REQUEST['auth_token'])){
 				$obj_connect->up();
-				$R_message = array("status" => "400", "message" => "Insert Data Failed");
 				$N_user_id = mysql_real_escape_string($_REQUEST['user_id']);
 				$N_auth_token = mysql_real_escape_string($_REQUEST['auth_token']);
 
@@ -124,10 +123,24 @@ if(isset($_GET['action'])){
 						}
 					}
 
-					$result = $obj_owner->insert_data($N_user_id, $N_token, $N_name, $N_email, $N_tempat_lahir, $N_birthday, $N_gender, $N_province, $N_city, $N_kecamatan, $N_kelurahan, $N_address, $N_phone1, $N_phone2, $N_phone3, $N_ktp, $file_loc1, $file_locThmb1, $N_status, $N_create_date);
-					//var_dump($result);
-					if($result == 1){
-						$R_message = array("status" => "200", "message" => "Insert Data Success");
+					$check_exist = $obj_owner->check_exist($N_token);
+					//var_dump($check_exist);
+					if($check_exist == 0){
+						$result = $obj_owner->insert_data($N_user_id, $N_token, $N_name, $N_email, $N_tempat_lahir, $N_birthday, $N_gender, $N_province, $N_city, $N_kecamatan, $N_kelurahan, $N_address, $N_phone1, $N_phone2, $N_phone3, $N_ktp, $file_loc1, $file_locThmb1, $N_status, $N_create_date);
+						//var_dump($result);
+						if($result == 1){
+							$R_message = array("status" => "201", "message" => "Insert Data Success");
+						}else{
+							$R_message = array("status" => "400", "message" => "Insert Data Failed");
+						}
+					}else{
+						$result = $obj_owner->update_data($N_token, $N_name, $N_email, $N_tempat_lahir, $N_birthday, $N_gender, $N_province, $N_city, $N_kecamatan, $N_kelurahan, $N_address, $N_phone1, $N_phone2, $N_phone3, $N_ktp, $file_loc1, $file_locThmb1, $global['root-url']);
+						//var_dump($result);
+						if($result == 1){
+							$R_message = array("status" => "200", "message" => "Update Data Success");
+						}else{
+							$R_message = array("status" => "400", "message" => "Update Data Failed");
+						}
 					}
 				}//check code
 				else{
@@ -136,7 +149,7 @@ if(isset($_GET['action'])){
 
 				$obj_connect->down();
 				echo json_encode($R_message);	
-			}//end insert owner
+			}//end post
 
 			//===================================== sync ========================================
 			//start sync
