@@ -3,6 +3,19 @@ class Property{
 
 	private $table = "t_property";
 
+    public function check_exist($token){
+        $result = 0;
+
+        $text = "SELECT property_token FROM $this->table WHERE property_token = '$token'";
+        $query = mysql_query($text);
+        if(mysql_num_rows($query) >= 1){
+            $row = mysql_fetch_array($query, MYSQL_ASSOC);
+            $result = 1;
+        }
+        //$result = $text;
+        return $result;
+    }
+
 	public function get_property_sync($user_id, $datas){
         $result = 0;
         $data = json_decode($datas);
@@ -59,6 +72,20 @@ class Property{
         //$result = $text;
 		return $result;
 	}
+
+    public function update_data($token, $owner, $title, $hak, $province, $city, $kecamatan, $kelurahan, $address, $zip, $type, $status_property, $sertifikat, $menghadap, $lebar_depan, $panjang_tanah, $luas_tanah, $luas_bangunan, $bed, $bed_plus, $bath, $floor, $luas_apartment, $description, $hashtag, $price, $komisi){
+        $result = 0;
+
+        $text = "UPDATE $this->table SET property_owner = '$owner', property_title = '$title', property_hak = '$hak', property_province = '$province', property_city = '$city', property_kecamatan = '$kecamatan', property_kelurahan = '$kelurahan', property_address = '$address', property_zip = '$zip', property_type = '$type', 
+            property_status_property = '$status_property', property_sertifikat = '$sertifikat', property_menghadap = '$menghadap', property_lebar_depan = '$lebar_depan', property_panjang_tanah = '$panjang_tanah', property_luas_tanah = '$luas_tanah', property_luas_bangunan = '$luas_bangunan', property_bed = '$bed', 
+            property_bed_plus = '$bed_plus', property_bath = '$bath', property_floor = '$floor', property_luas_apartment = '$luas_apartment', property_description = '$description', property_hashtag = '$hashtag', property_price = '$price', property_komisi = '$komisi' WHERE property_token = '$token'";
+        $query = mysql_query($text);
+        if(mysql_affected_rows() == 1){
+            $result = 1;
+        }
+        //$result = $text;
+        return $result;
+    }
 
     public function delete_data($token, $path){
         $result = 0;
