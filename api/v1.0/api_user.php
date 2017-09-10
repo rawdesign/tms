@@ -37,6 +37,7 @@ if(isset($_GET['action'])){
 				$password = $obj_encrypt->encode($N_password);
 
 				$result = $obj_user->login($N_email, $password);
+				//var_dump($result);
 				if(is_array($result)){
 					$R_message = array("status" => "200", "message" => "Login Success", "data" => $result);
 				}

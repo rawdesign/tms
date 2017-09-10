@@ -28,13 +28,18 @@ class User{
     public function login($email, $password){
         $result = 0;//FAILED
         
-        $text = "SELECT user_id, user_name, user_email, user_auth_token FROM $this->table 
+        $text = "SELECT user_id, user_no_tmc, user_name, user_card_name, user_email, user_province, user_city,
+            user_height, user_weight, user_size, user_work, user_tempat_lahir, user_birthday, user_gender,
+            user_status_menikah, user_warga_negara, user_ktp, user_address, user_mail_address, user_religion,
+            user_phone1, user_phone2, user_phone3, user_npwp, user_instagram, user_whatsapp, user_bank, 
+            user_cabang, user_no_rek, user_img, user_scan, user_auth_token FROM $this->table 
             WHERE user_email = '$email' AND user_password = '$password' LIMIT 0,1";
         $query = mysql_query($text);
         if(mysql_num_rows($query) == 1){//HAS TO BE EXACT 1 RESULT
             $row = mysql_fetch_assoc($query);
             $result = $row;
         }
+        //$result = $text;
         return $result;
     }
 
