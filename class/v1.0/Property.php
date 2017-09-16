@@ -36,8 +36,8 @@ class Property{
             property_city, property_kecamatan, property_kelurahan, property_address, property_zip, property_type, 
             property_status_property, property_sertifikat, property_menghadap, property_lebar_depan, property_panjang_tanah,
             property_luas_tanah, property_luas_bangunan, property_bed, property_bed_plus, property_bath, property_floor, 
-            property_luas_apartment, property_description, property_hashtag, property_price, property_komisi, property_status, 
-            property_create_date FROM $this->table WHERE property_status = 'success' $cond ORDER BY property_create_date ASC";
+            property_description, property_hashtag, property_price, property_komisi, property_status, property_create_date 
+            FROM $this->table WHERE property_status = 'success' $cond ORDER BY property_create_date ASC";
         $query = mysql_query($text);
         if(mysql_num_rows($query) >= 1){
             $result = array();
@@ -60,11 +60,11 @@ class Property{
         return $result;
     }
 
-    public function insert_data($token, $owner, $title, $hak, $province, $city, $kecamatan, $kelurahan, $address, $zip, $type, $status_property, $sertifikat, $menghadap, $lebar_depan, $panjang_tanah, $luas_tanah, $luas_bangunan, $bed, $bed_plus, $bath, $floor, $luas_apartment, $description, $hashtag, $price, $komisi, $status, $create_date){
+    public function insert_data($token, $owner, $title, $hak, $province, $city, $kecamatan, $kelurahan, $address, $zip, $type, $status_property, $sertifikat, $menghadap, $lebar_depan, $panjang_tanah, $luas_tanah, $luas_bangunan, $bed, $bed_plus, $bath, $floor, $description, $hashtag, $price, $komisi, $status, $create_date){
 		$result = 0;
 
-		$text = "INSERT INTO $this->table (property_token, property_owner, property_title, property_hak, property_province, property_city, property_kecamatan, property_kelurahan, property_address, property_zip, property_type, property_status_property, property_sertifikat, property_menghadap, property_lebar_depan, property_panjang_tanah, property_luas_tanah, property_luas_bangunan, property_bed, property_bed_plus, property_bath, property_floor, property_luas_apartment, property_description, property_hashtag, property_price, property_komisi, property_status, property_create_date) 
-			VALUES('$token', '$owner', '$title', '$hak', '$province', '$city', '$kecamatan', '$kelurahan', '$address', '$zip', '$type', '$status_property', '$sertifikat', '$menghadap', '$lebar_depan', '$panjang_tanah', '$luas_tanah', '$luas_bangunan', '$bed', '$bed_plus', '$bath', '$floor', '$luas_apartment', '$description', '$hashtag', '$price', '$komisi', '$status', '$create_date')";
+		$text = "INSERT INTO $this->table (property_token, property_owner, property_title, property_hak, property_province, property_city, property_kecamatan, property_kelurahan, property_address, property_zip, property_type, property_status_property, property_sertifikat, property_menghadap, property_lebar_depan, property_panjang_tanah, property_luas_tanah, property_luas_bangunan, property_bed, property_bed_plus, property_bath, property_floor, property_description, property_hashtag, property_price, property_komisi, property_status, property_create_date) 
+			VALUES('$token', '$owner', '$title', '$hak', '$province', '$city', '$kecamatan', '$kelurahan', '$address', '$zip', '$type', '$status_property', '$sertifikat', '$menghadap', '$lebar_depan', '$panjang_tanah', '$luas_tanah', '$luas_bangunan', '$bed', '$bed_plus', '$bath', '$floor', '$description', '$hashtag', '$price', '$komisi', '$status', '$create_date')";
 		$query = mysql_query($text);
 		if($query){
 			$result = 1;
@@ -73,12 +73,12 @@ class Property{
 		return $result;
 	}
 
-    public function update_data($token, $owner, $title, $hak, $province, $city, $kecamatan, $kelurahan, $address, $zip, $type, $status_property, $sertifikat, $menghadap, $lebar_depan, $panjang_tanah, $luas_tanah, $luas_bangunan, $bed, $bed_plus, $bath, $floor, $luas_apartment, $description, $hashtag, $price, $komisi){
+    public function update_data($token, $owner, $title, $hak, $province, $city, $kecamatan, $kelurahan, $address, $zip, $type, $status_property, $sertifikat, $menghadap, $lebar_depan, $panjang_tanah, $luas_tanah, $luas_bangunan, $bed, $bed_plus, $bath, $floor, $description, $hashtag, $price, $komisi){
         $result = 0;
 
         $text = "UPDATE $this->table SET property_owner = '$owner', property_title = '$title', property_hak = '$hak', property_province = '$province', property_city = '$city', property_kecamatan = '$kecamatan', property_kelurahan = '$kelurahan', property_address = '$address', property_zip = '$zip', property_type = '$type', 
             property_status_property = '$status_property', property_sertifikat = '$sertifikat', property_menghadap = '$menghadap', property_lebar_depan = '$lebar_depan', property_panjang_tanah = '$panjang_tanah', property_luas_tanah = '$luas_tanah', property_luas_bangunan = '$luas_bangunan', property_bed = '$bed', 
-            property_bed_plus = '$bed_plus', property_bath = '$bath', property_floor = '$floor', property_luas_apartment = '$luas_apartment', property_description = '$description', property_hashtag = '$hashtag', property_price = '$price', property_komisi = '$komisi' WHERE property_token = '$token'";
+            property_bed_plus = '$bed_plus', property_bath = '$bath', property_floor = '$floor', property_description = '$description', property_hashtag = '$hashtag', property_price = '$price', property_komisi = '$komisi' WHERE property_token = '$token'";
         $query = mysql_query($text);
         if(mysql_affected_rows() == 1){
             $result = 1;

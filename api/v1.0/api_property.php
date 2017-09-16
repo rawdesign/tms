@@ -56,7 +56,6 @@ if(isset($_GET['action'])){
 				$N_bed_plus = mysql_real_escape_string($_REQUEST['bed_plus']);
 				$N_bath = mysql_real_escape_string($_REQUEST['bath']);
 				$N_floor = mysql_real_escape_string($_REQUEST['floor']);
-				$N_luas_apartment = mysql_real_escape_string($_REQUEST['luas_apartment']);
 				$N_description = mysql_real_escape_string($_REQUEST['description']);
 				$N_hashtag = mysql_real_escape_string($_REQUEST['hashtag']);
 				$N_price = mysql_real_escape_string($_REQUEST['price']);
@@ -68,7 +67,7 @@ if(isset($_GET['action'])){
 					$check_exist = $obj_property->check_exist($N_token);
 					//var_dump($check_exist);
 					if($check_exist == 0){
-						$result = $obj_property->insert_data($N_token, $N_owner, $N_title, $N_hak, $N_province, $N_city, $N_kecamatan, $N_kelurahan, $N_address, $N_zip, $N_type, $N_status_property, $N_sertifikat, $N_menghadap, $N_lebar_depan, $N_panjang_tanah, $N_luas_tanah, $N_luas_bangunan, $N_bed, $N_bed_plus, $N_bath, $N_floor, $N_luas_apartment, $N_description, $N_hashtag, $N_price, $N_komisi, $N_status, $N_create_date);
+						$result = $obj_property->insert_data($N_token, $N_owner, $N_title, $N_hak, $N_province, $N_city, $N_kecamatan, $N_kelurahan, $N_address, $N_zip, $N_type, $N_status_property, $N_sertifikat, $N_menghadap, $N_lebar_depan, $N_panjang_tanah, $N_luas_tanah, $N_luas_bangunan, $N_bed, $N_bed_plus, $N_bath, $N_floor, $N_description, $N_hashtag, $N_price, $N_komisi, $N_status, $N_create_date);
 						//var_dump($result);
 						if($result == 1){
 							//insert image
@@ -114,7 +113,7 @@ if(isset($_GET['action'])){
 							$R_message = array("status" => "400", "message" => "Insert Data Failed");
 						}
 					}else{
-						$result = $obj_property->update_data($N_token, $N_owner, $N_title, $N_hak, $N_province, $N_city, $N_kecamatan, $N_kelurahan, $N_address, $N_zip, $N_type, $N_status_property, $N_sertifikat, $N_menghadap, $N_lebar_depan, $N_panjang_tanah, $N_luas_tanah, $N_luas_bangunan, $N_bed, $N_bed_plus, $N_bath, $N_floor, $N_luas_apartment, $N_description, $N_hashtag, $N_price, $N_komisi);
+						$result = $obj_property->update_data($N_token, $N_owner, $N_title, $N_hak, $N_province, $N_city, $N_kecamatan, $N_kelurahan, $N_address, $N_zip, $N_type, $N_status_property, $N_sertifikat, $N_menghadap, $N_lebar_depan, $N_panjang_tanah, $N_luas_tanah, $N_luas_bangunan, $N_bed, $N_bed_plus, $N_bath, $N_floor, $N_description, $N_hashtag, $N_price, $N_komisi);
 						//var_dump($result);
 						if($result == 1){
 							$R_message = array("status" => "200", "message" => "Update Data Success");
