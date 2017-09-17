@@ -69,7 +69,7 @@ if(isset($_GET['action'])){
 									$result = $obj_image->insert_data($N_token, $N_property, $file_loc1, $file_locThmb1, $N_status);
 									//var_dump($result);
 									if($result == 1){
-										$R_message = array("status" => "201", "message" => "Insert Data Success");
+										$R_message = array("status" => "200", "message" => "Insert Data Success");
 									}
 								}else{
 									$R_message = array("status" => "413", "message" => "ERROR: file size max 10 MB!");
