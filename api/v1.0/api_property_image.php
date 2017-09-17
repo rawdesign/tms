@@ -23,8 +23,8 @@ if(isset($_GET['action'])){
 			require_once($global['root-url-model'].$version."/User.php");
 			$obj_user = new User();
 
-			//===================================== insert data ========================================
-			//start insert data
+			//===================================== insert ========================================
+			//start insert
 			if($_GET['action'] == 'insert_data' && isset($_REQUEST['user_id']) && isset($_REQUEST['auth_token'])){
 				$obj_connect->up();
 				$R_message = array("status" => "400", "message" => "Insert Data Failed");
@@ -88,7 +88,7 @@ if(isset($_GET['action'])){
 
 				$obj_connect->down();
 				echo json_encode($R_message);	
-			}//end insert data
+			}//end insert
 
 			/*//===================================== sync ========================================
 			//start sync
@@ -113,7 +113,7 @@ if(isset($_GET['action'])){
 
 				$obj_connect->down();	
 				echo json_encode($R_message);	
-			}//end sync
+			}//end sync*/
 
 			//===================================== delete ========================================
 			//start delete
@@ -126,7 +126,7 @@ if(isset($_GET['action'])){
 				$N_token = mysql_real_escape_string($_REQUEST['token']);
 
 				if($obj_user->check_code($N_auth_token, $N_user_id)){//check code
-					$result = $obj_property->delete_data($N_token, $global['root-url']);
+					$result = $obj_image->delete_data($N_token, $global['root-url']);
 					//var_dump($result);
 					if($result >= 1){
 						$R_message = array("status" => "200", "message" => "Delete success");
@@ -138,7 +138,7 @@ if(isset($_GET['action'])){
 
 				$obj_connect->down();	
 				echo json_encode($R_message);	
-			}//end delete*/
+			}//end delete
 
 			else{
 				$R_message = array("status" => "404", "message" => "Action Not Found");
