@@ -102,7 +102,7 @@ if(isset($_GET['action'])){
 													$image->save($file_locThmb);
 												}
 												
-												$obj_image->insert_data($N_image_token, $N_token, $file_loc1, $file_locThmb1);
+												$obj_image->insert_data($N_image_token, $N_token, $file_loc1, $file_locThmb1, $N_status);
 											}
 										}
 									}
