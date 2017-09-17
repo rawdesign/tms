@@ -287,6 +287,9 @@ RewriteRule ^api/(.*)/kelurahan/kecamatan/([0-9]+)/$ api/$1/api_kelurahan.php?ac
 #code to redirect to api/api_property_image.php?action=insert_data
 RewriteRule ^api/(.*)/property-image/insert/$ api/$1/api_property_image.php?action=insert_data
 
+#code to redirect to api/api_property_image.php?action=sync
+RewriteRule ^api/(.*)/property-image/sync/$ api/$1/api_property_image.php?action=sync
+
 #code to redirect to api/api_property_image.php?action=delete_data
 RewriteRule ^api/(.*)/property-image/delete/$ api/$1/api_property_image.php?action=delete_data
 

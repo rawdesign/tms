@@ -43,9 +43,9 @@ class Property{
             $result = array();
             $loop = 0;
             while($row = mysql_fetch_assoc($query)){
-                $result[] = $row;
+                $result[$loop] = $row;
 
-                $text_detail = "SELECT pi_id, pi_token, pi_property, pi_img, pi_img_thmb 
+                $text_detail = "SELECT pi_id, pi_token, pi_property, pi_img, pi_img_thmb, pi_status 
                 	FROM t_property_image WHERE pi_property = '{$row['property_token']}'";
                 $query_detail = mysql_query($text_detail);
                 if(mysql_num_rows($query_detail) >= 1){

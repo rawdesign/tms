@@ -3,6 +3,35 @@ class PropertyImage{
 
 	private $table = "t_property_image";
 
+    public function get_image_sync_by_property($user_id, $property, $datas){
+        $result = 0;
+        $data = json_decode($datas);
+        if(is_array($data)){
+            $q_string = "";
+            $count = 1;
+            foreach($data as $i){
+                $seperate = $count == count($data) ? "" : ",";
+                $q_string .= "'".$i->token."'".$seperate;
+                $count++;
+            }
+            $cond = "AND pi_token NOT IN(".$q_string.")";
+        }else{
+            $cond = "";
+        }
+
+        $text = "SELECT pi_token, pi_property, pi_img, pi_img_thmb, pi_status FROM $this->table 
+            WHERE pi_status = 'success' AND pi_property = '$property' $cond";
+        $query = mysql_query($text);
+        if(mysql_num_rows($query) >= 1){
+            $result = array();
+            while($row = mysql_fetch_assoc($query)){
+                $result[] = $row;
+            }
+        }
+        //$result = $text;
+        return $result;
+    }
+
 	public function insert_data($token, $property, $img, $img_thmb, $status){
 		$result = 0;
 
