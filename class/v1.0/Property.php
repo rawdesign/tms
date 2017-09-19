@@ -33,11 +33,12 @@ class Property{
         }
 
         $text = "SELECT property_id, property_token, property_owner, property_title, property_hak, property_province,
-            property_city, property_kecamatan, property_kelurahan, property_address, property_zip, property_type, 
-            property_status_property, property_sertifikat, property_menghadap, property_lebar_depan, property_panjang_tanah,
-            property_luas_tanah, property_luas_bangunan, property_bed, property_bed_plus, property_bath, property_floor, 
-            property_description, property_hashtag, property_price, property_komisi, property_status, property_create_date 
-            FROM $this->table WHERE property_status = 'success' $cond ORDER BY property_create_date ASC";
+            property_city, property_kecamatan, property_kelurahan, property_address, property_zip, property_jual_beli, 
+            property_type, property_status_property, property_sertifikat, property_promo, property_menghadap, 
+            property_lebar_depan, property_panjang_tanah, property_luas_tanah, property_luas_bangunan, property_bed, 
+            property_bed_plus, property_bath, property_bath_plus, property_floor, property_daya_listrik, property_sumber_air,
+            property_fasilitas, property_description, property_hashtag, property_price, property_komisi, property_status, 
+            property_create_date FROM $this->table WHERE property_status = 'success' $cond ORDER BY property_create_date ASC";
         $query = mysql_query($text);
         if(mysql_num_rows($query) >= 1){
             $result = array();
