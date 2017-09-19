@@ -3,7 +3,7 @@ class PropertyImage{
 
 	private $table = "t_property_image";
 
-    public function get_image_sync_by_property($user_id, $property, $datas){
+    public function get_image_sync_by_property($property, $datas){
         $result = 0;
         $data = json_decode($datas);
         if(is_array($data)){

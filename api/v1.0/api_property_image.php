@@ -102,7 +102,7 @@ if(isset($_GET['action'])){
 				$N_data = isset($_REQUEST['data']) ? $_REQUEST['data'] : "";
 
 				if($obj_user->check_code($N_auth_token, $N_user_id)){//check code
-					$result = $obj_image->get_image_sync_by_property($N_user_id, $N_property, $N_data);
+					$result = $obj_image->get_image_sync_by_property($N_property, $N_data);
 					//var_dump($result);
 					if(is_array($result)){
 						$R_message = array("status" => "200", "message" => "Data Exist", "data" => $result);
